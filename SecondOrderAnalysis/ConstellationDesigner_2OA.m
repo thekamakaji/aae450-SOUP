@@ -1,6 +1,6 @@
 % 2nd Order Analysis - Constellation Designer
 % Author: V. Swaminathan
-% Version: 10/13/2021 0931 EST
+% Version: 10/13/2021 0941 EST
 % Purpose: To help develop Team SoUP's satellite constellation to meet
 %          requirements of AAE450 Project (2nd order analysis)
 % 
@@ -24,7 +24,7 @@ W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Surface Target/Propogation Definitions
 
-Lat = 30; % Target Latitude(s) for Observation [deg.] --> Positive only (assume mirrored performance)
+Lat = 70; % Target Latitude(s) for Observation [deg.] --> Positive only (assume mirrored performance)
 startLong = 0; % Starting Longitude of Reciever in Ref. Plane [deg.]
 timeTotal = 3*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days (24 hrs.)
 
@@ -37,8 +37,8 @@ fprintf("Propogation Time: %.2f days\n", timeTotal/SolarDay_E);
 %% Satellite/Constellation Definitions
 
 % Define Walker Constellation Parameters to Test
-C_totalSats = 1; % Total Number of Rx satellites in Constellation
-C_planes = 1; % Number of Equally spaced orbital planes
+C_totalSats = 4; % Total Number of Rx satellites in Constellation
+C_planes = 4; % Number of Equally spaced orbital planes
 C_spacing = 0; % Spacing b/w satellites in adjacent planes (true anomaly "slots")
 
 % Sensor/Instrumentation Parameters
@@ -102,7 +102,7 @@ for m = 1:1:(C_planes - 1)
 end
 
 % Add Longitude Passes of Multiple Satellites in Same Planes @ Target Lat. [deg.]
-% !!! NEEDS TO BE CHECKED AND VERIFIED !!!
+% !!! NEED TO DEBUG !!!
 for x = 1:1:C_planes
     tempVec = C_surfLongFirst(x,:);
     for L = 1:1:(C_satsPerPlane - 1)
