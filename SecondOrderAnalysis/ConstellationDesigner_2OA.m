@@ -28,12 +28,6 @@ Lat = 0; % Target Latitude(s) for Observation [deg.] (|Lat| <= Rx_i)
 startLong = 0; % Starting Longitude of Reciever in Ref. Plane [deg.]
 timeTotal = 3*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days (24 hrs.)
 
-% Print Surface Target/Propogation Definitions
-fprintf("-----------------------------------------------------------------\n");
-fprintf("Target Latitude: %.2f degrees\n", Lat);
-fprintf("Starting Longitude of Ref. Orbit: %.2f degrees\n", startLong);
-fprintf("Propogation Time: %.2f days\n", timeTotal/SolarDay_E);
-
 %% Satellite/Constellation Definitions
 
 % Define Walker Constellation Parameters to Test
@@ -55,6 +49,12 @@ Rx_p = Rx_a*(1 - Rx_e^2); % Semilatus Rectum p [km]
 Rx_v = asind(sind(Lat)/sind(Rx_i)) - Rx_w; % True Anomaly @ target Latitude [deg.]
 Rx_rs = Rx_p / (1 + (Rx_e*cosd(Rx_v))); % Orbital Radius @ Target Latitude [km]
 Rx_hs = Rx_rs - geodeticR(R_A, R_B, Lat); % Orbital Altitude @ Target Latitude [km]
+
+% Print Surface Target/Propogation Definitions
+fprintf("-----------------------------------------------------------------\n");
+fprintf("Target Latitude: %.2f degrees\n", Lat);
+fprintf("Starting Longitude of Ref. Orbit: %.2f degrees\n", startLong);
+fprintf("Propogation Time: %.2f days\n", timeTotal/SolarDay_E);
 
 % Print out parameters from satellite definitions
 fprintf("-----------------------------------------------------------------\n");
