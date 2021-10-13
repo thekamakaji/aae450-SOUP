@@ -134,14 +134,13 @@ fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPasses))
 
 %% Calculation - Determination of Visible Longitudes
 
-% Basic Sensor Parameters --> Check SDA, HGRA functions for debugging
+% Basic Sensor Parameters
 R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
 HGRA = halfGRA(Rx_rs, S_phi, R_geo); % Half Ground Range Angle [deg.]
 SDA = surfDA(HGRA, Lat); % Surface Dihedral Angle (longitude coverage of sensor) [deg.]
 
 % Print out Longitude Coverage Range of Sensor
 fprintf("-----------------------------------------------------------------\n");
-%fprintf("\n!!! NEEDS DEBUGGING FOR CERTAIN LAT. VALUES !!!\n\n");
 fprintf("Coverage Range of Sensor in Surface Longitude: %.3f degrees\n", SDA);
 fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", (SDA/360)*(2*pi*R_geo*cosd(Lat)));
 fprintf("-----------------------------------------------------------------\n");
