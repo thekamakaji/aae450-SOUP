@@ -24,7 +24,7 @@ W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Surface Target/Propogation Definitions
 
-Lat = 30; % Target Latitude(s) for Observation [deg.]
+Lat = 82; % Target Latitude(s) for Observation [deg.] (-82 <= Lat <= 82)
 startLong = 0; % Starting Longitude of Reciever in Ref. Plane [deg.]
 timeTotal = 3*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days (24 hrs.)
 
