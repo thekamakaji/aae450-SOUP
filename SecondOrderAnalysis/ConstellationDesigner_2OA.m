@@ -1,6 +1,6 @@
 % 2nd Order Analysis - Constellation Designer
 % Author: V. Swaminathan
-% Version: 10/13/2021 0834 EST
+% Version: 10/13/2021 0927 EST
 % Purpose: To help develop Team SoUP's satellite constellation to meet
 %          requirements of AAE450 Project (2nd order analysis)
 % 
