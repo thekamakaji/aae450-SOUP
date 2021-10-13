@@ -1,6 +1,6 @@
 % 2nd Order Analysis - Constellation Designer
 % Author: V. Swaminathan
-% Version: 10/13/2021 0941 EST
+% Version: 10/13/2021 0943 EST
 % Purpose: To help develop Team SoUP's satellite constellation to meet
 %          requirements of AAE450 Project (2nd order analysis)
 % 
@@ -13,7 +13,7 @@
 clear all;
 close all;
 
-%% Constants
+%% Constant Parameters
 R_A = 6378.137; % Earth Equatorial Radius [km]
 R_B = 6356.752; % Earth Polar Radius [km]
 MU = 3.986e5; % Gravitational Param. for Earth [km^3/s^2]
