@@ -134,10 +134,6 @@ fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPasses))
 
 %% Calculation - Determination of Visible Longitudes
 
-% !!! ISSUES FOR FOLLOWING LAT. VALUES !!! --> DEBUG NEEDED --> maybe
-% solved, found issue in surfDA function and fixed
-% ~30 +- 2, ~60 +- 7, ~11, ~1 - ~8, ~20 - ~21, ~50
-
 % Basic Sensor Parameters --> Check SDA, HGRA functions for debugging
 R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
 HGRA = halfGRA(Rx_rs, S_phi, R_geo); % Half Ground Range Angle [deg.]
