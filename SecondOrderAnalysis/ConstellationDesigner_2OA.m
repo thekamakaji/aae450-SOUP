@@ -1,6 +1,6 @@
 % 2nd Order Analysis - Constellation Designer
 % Author: V. Swaminathan
-% Version: 10/13/2021 1318 EST
+% Version: 10/13/2021 1332 EST
 % Purpose: To help develop Team SoUP's satellite constellation to meet
 %          requirements of AAE450 Project (2nd order analysis)
 % 
@@ -150,7 +150,7 @@ fprintf("Coverage Range of Sensor in Surface Longitude: %.3f degrees\n", SDA);
 fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", (SDA/360)*(2*pi*R_geo*cosd(Lat)));
 fprintf("-----------------------------------------------------------------\n");
 
-% Longitude Coverage Range
+% Longitude Coverage Range - Discretization of Coverage
 % !!! IMPLEMENTATION NEEDED !!!
 
 %% Plots of MRT/ART and Design Spaces
