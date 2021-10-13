@@ -1,6 +1,6 @@
 % 2nd Order Analysis - Constellation Designer
 % Author: V. Swaminathan
-% Version: 10/13/2021 1342 EST
+% Version: 10/13/2021 1413 EST
 % Purpose: To help develop Team SoUP's satellite constellation to meet
 %          requirements of AAE450 Project (2nd order analysis)
 % 
@@ -47,7 +47,7 @@ Rx_w = 0; % Argument of Perigee [deg.]
 
 Rx_p = Rx_a*(1 - Rx_e^2); % Semilatus Rectum p [km]
 Rx_v = asind(sind(Lat)/sind(Rx_i)) - Rx_w; % True Anomaly @ target Latitude [deg.]
-Rx_rs = Rx_p / (1 + (Rx_e*cosd(Rx_v))); % Orbital Radius @ Target Latitude [km]
+Rx_rs = Rx_p / (1 + (Rx_e*cosd(Rx_v))); % Orbital Radius @ Target Latitude [km] --> Check calculation!!!
 Rx_hs = Rx_rs - geodeticR(R_A, R_B, Lat); % Orbital Altitude @ Target Latitude [km]
 
 % Print Surface Target/Propogation Definitions
@@ -134,9 +134,15 @@ fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPasses))
 
 %% Calculation - Determination of Visible Longitudes
 
+% !!! NEEDS VERIFICATION !!!
+% Potential Issues:
+% - Incorrect Coverage Range of Sensor (high altitudes showing lower
+%   coverage than lower altitudes
+
 % Basic Sensor Parameters
 R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
 HGRA = halfGRA(Rx_rs, S_phi, R_geo); % Half Ground Range Angle [deg.]
+GRA = 2*HGRA; % Ground Range Angle [deg.]
 SDA = surfDA(HGRA, Lat); % Surface Dihedral Angle (longitude coverage of sensor) [deg.]
 
 % Print out Longitude Coverage Range of Sensor
