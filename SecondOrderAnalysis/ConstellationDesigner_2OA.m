@@ -1,6 +1,6 @@
 % 2nd Order Analysis - Constellation Designer
 % Author: V. Swaminathan
-% Version: 10/13/2021 0943 EST
+% Version: 10/13/2021 1318 EST
 % Purpose: To help develop Team SoUP's satellite constellation to meet
 %          requirements of AAE450 Project (2nd order analysis)
 % 
@@ -24,7 +24,7 @@ W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Surface Target/Propogation Definitions
 
-Lat = 70; % Target Latitude(s) for Observation [deg.] --> Positive only (assume mirrored performance)
+Lat = 0; % Target Latitude(s) for Observation [deg.] --> Positive only (assume mirrored performance)
 startLong = 0; % Starting Longitude of Reciever in Ref. Plane [deg.]
 timeTotal = 3*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days (24 hrs.)
 
@@ -123,13 +123,14 @@ end
 C_allPasses = wrapTo180(C_allPasses);
 C_allPasses = unique(C_allPasses);
 
+% Geodetic Radius for Circumference @ Target Lat.
 R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
 
 % Print out "gaps" in Longitude passes (not accounting for sensor capabilities
 fprintf("-----------------------------------------------------------------\n");
 fprintf("Number of Orbits by Each Sat. within Propogation Time: %.0f\n", j_n);
 fprintf("Largest Gap in Longitude of Passes: %.3f degrees\n", max(diff(C_allPasses)));
-fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPasses))/360)*(2*pi*R_geo));
+fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPasses))/360)*(2*pi*R_geo*cosd(Lat)));
 
 %% Calculation - Determination of Visible Longitudes
 
