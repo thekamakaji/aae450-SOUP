@@ -1,6 +1,6 @@
 % 2nd Order Analysis - Constellation Designer
 % Author: V. Swaminathan
-% Version: 10/13/2021 1332 EST
+% Version: 10/13/2021 1342 EST
 % Purpose: To help develop Team SoUP's satellite constellation to meet
 %          requirements of AAE450 Project (2nd order analysis)
 % 
@@ -24,7 +24,7 @@ W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Surface Target/Propogation Definitions
 
-Lat = 82; % Target Latitude(s) for Observation [deg.] (-82 <= Lat <= 82)
+Lat = 0; % Target Latitude(s) for Observation [deg.] (|Lat| <= Rx_i)
 startLong = 0; % Starting Longitude of Reciever in Ref. Plane [deg.]
 timeTotal = 3*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days (24 hrs.)
 
