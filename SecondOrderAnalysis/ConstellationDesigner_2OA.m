@@ -60,6 +60,10 @@ Rx_hs = Rx_rs - geodeticR(R_A, R_B, Lat); % Orbital Altitude @ Target Latitude [
 
 % Print out parameters from satellite definitions
 fprintf("-----------------------------------------------------------------\n");
+fprintf("Number of Satellites in Constellation: %.0f\n", C_totalSats);
+fprintf("Number of Equally Spaced Orbital Planes: %.0f\n", C_planes);
+fprintf("Relative Spacing of Sats. in Adjacent Planes: %.0f\n", C_spacing);
+fprintf("-----------------------------------------------------------------\n");
 fprintf("Ref. Orbit Altitude: %.2f km\n", Rx_a - R_A);
 fprintf("Ref. Orbit Inclination: %.2f degrees\n", Rx_i);
 fprintf("Ref. Orbit Eccentricity: %.2f\n", Rx_e);
