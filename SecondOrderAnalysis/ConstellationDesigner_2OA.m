@@ -24,10 +24,7 @@ W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Surface Target/Propogation Definitions
 
-% !!! ISSUES FOR FOLLOWING LAT. VALUES !!! --> DEBUG NEEDED
-% ~30 +- 2, ~60 +- 7, ~11, ~1 - ~8, ~20 - ~21, ~50
-
-Lat = 70; % Target Latitude(s) for Observation [deg.] --> Positive only (assume mirrored performance)
+Lat = 30; % Target Latitude(s) for Observation [deg.] --> Positive only (assume mirrored performance)
 startLong = 0; % Starting Longitude of Reciever in Ref. Plane [deg.]
 timeTotal = 3*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days (24 hrs.)
 
@@ -133,6 +130,9 @@ fprintf("Largest Gap in Longitude of Passes: %.3f degrees\n", max(diff(C_allPass
 fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPasses))/360)*(2*pi*R_A));
 
 %% Calculation - Determination of Visible Longitudes
+
+% !!! ISSUES FOR FOLLOWING LAT. VALUES !!! --> DEBUG NEEDED
+% ~30 +- 2, ~60 +- 7, ~11, ~1 - ~8, ~20 - ~21, ~50
 
 % Basic Sensor Parameters
 % !!! DEBUG FOR LOWER LAT. VALUES !!!
