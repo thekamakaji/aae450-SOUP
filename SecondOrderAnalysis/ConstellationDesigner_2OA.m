@@ -37,8 +37,8 @@ fprintf("Propogation Time: %.2f days\n", timeTotal/SolarDay_E);
 %% Satellite/Constellation Definitions
 
 % Define Walker Constellation Parameters to Test
-C_totalSats = 4; % Total Number of Rx satellites in Constellation
-C_planes = 4; % Number of Equally spaced orbital planes
+C_totalSats = 16; % Total Number of Rx satellites in Constellation
+C_planes = 1; % Number of Equally spaced orbital planes
 C_spacing = 0; % Spacing b/w satellites in adjacent planes (true anomaly "slots")
 
 % Sensor/Instrumentation Parameters
@@ -47,9 +47,10 @@ S_phi = 60; % Half-cone boresight angle of Antennae [deg.] (Incd. Ang.)
 % Orbital Parameters for Reference Receiver (Rx)
 Rx_a = 750 + R_A; % Orbit radius [km] (semimajor axis (circular))
 Rx_e = 0; % Eccentricity
-Rx_i = 85; % Inclination [deg.]
+Rx_i = 98; % Inclination [deg.]
 Rx_RAAN = 0; % Right Ascension of AN [deg.]
 Rx_w = 0; % Argument of Perigee [deg.]
+
 Rx_p = Rx_a*(1 - Rx_e^2); % Semilatus Rectum p [km]
 Rx_v = asind(sind(Lat)/sind(Rx_i)) - Rx_w; % True Anomaly @ target Latitude [deg.]
 Rx_rs = Rx_p / (1 + (Rx_e*cosd(Rx_v))); % Orbital Radius @ Target Latitude [km]
@@ -102,7 +103,6 @@ for m = 1:1:(C_planes - 1)
 end
 
 % Add Longitude Passes of Multiple Satellites in Same Planes @ Target Lat. [deg.]
-% !!! NEED TO DEBUG !!!
 for x = 1:1:C_planes
     tempVec = C_surfLongFirst(x,:);
     for L = 1:1:(C_satsPerPlane - 1)
@@ -123,15 +123,18 @@ end
 C_allPasses = wrapTo180(C_allPasses);
 C_allPasses = unique(C_allPasses);
 
+R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
+
 % Print out "gaps" in Longitude passes (not accounting for sensor capabilities
 fprintf("-----------------------------------------------------------------\n");
 fprintf("Number of Orbits by Each Sat. within Propogation Time: %.0f\n", j_n);
 fprintf("Largest Gap in Longitude of Passes: %.3f degrees\n", max(diff(C_allPasses)));
-fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPasses))/360)*(2*pi*R_A));
+fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPasses))/360)*(2*pi*R_geo));
 
 %% Calculation - Determination of Visible Longitudes
 
-% !!! ISSUES FOR FOLLOWING LAT. VALUES !!! --> DEBUG NEEDED
+% !!! ISSUES FOR FOLLOWING LAT. VALUES !!! --> DEBUG NEEDED --> maybe
+% solved, found issue in surfDA function and fixed
 % ~30 +- 2, ~60 +- 7, ~11, ~1 - ~8, ~20 - ~21, ~50
 
 % Basic Sensor Parameters --> Check SDA, HGRA functions for debugging
@@ -141,9 +144,9 @@ SDA = surfDA(HGRA, Lat); % Surface Dihedral Angle (longitude coverage of sensor)
 
 % Print out Longitude Coverage Range of Sensor
 fprintf("-----------------------------------------------------------------\n");
-fprintf("\n!!! NEEDS DEBUGGING FOR CERTAIN LAT. VALUES !!!\n\n");
+%fprintf("\n!!! NEEDS DEBUGGING FOR CERTAIN LAT. VALUES !!!\n\n");
 fprintf("Coverage Range of Sensor in Surface Longitude: %.3f degrees\n", SDA);
-fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", (SDA/360)*(2*pi*R_A));
+fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", (SDA/360)*(2*pi*R_geo*cosd(Lat)));
 fprintf("-----------------------------------------------------------------\n");
 
 % Longitude Coverage Range
