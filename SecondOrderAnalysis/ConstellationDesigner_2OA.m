@@ -1,6 +1,6 @@
 % 2nd Order Analysis - Constellation Designer
 % Author: V. Swaminathan
-% Version: 10/13/2021 1413 EST
+% Version: 10/14/2021 1246 EST
 % Purpose: To help develop Team SoUP's satellite constellation to meet
 %          requirements of AAE450 Project (2nd order analysis)
 % 
@@ -39,9 +39,9 @@ C_spacing = 0; % Spacing b/w satellites in adjacent planes (true anomaly "slots"
 S_phi = 60; % Half-cone boresight angle of Antennae [deg.] (Incd. Ang.)
 
 % Orbital Parameters for Reference Receiver (Rx)
-Rx_a = 750 + R_A; % Orbit radius [km] (semimajor axis (circular))
+Rx_a = 987 + R_A; % Orbit radius [km] (semimajor axis (circular))
 Rx_e = 0; % Eccentricity
-Rx_i = 98; % Inclination [deg.]
+Rx_i = 99.7; % Inclination [deg.]
 Rx_RAAN = 0; % Right Ascension of AN [deg.]
 Rx_w = 0; % Argument of Perigee [deg.]
 
@@ -121,7 +121,7 @@ end
 
 % Normalize Passes to 360 deg. Earth
 C_allPasses = wrapTo180(C_allPasses);
-C_allPasses = unique(C_allPasses);
+C_allPassesUnique = unique(C_allPasses);
 
 % Geodetic Radius for Circumference @ Target Lat.
 R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
@@ -129,8 +129,8 @@ R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
 % Print out "gaps" in Longitude passes (not accounting for sensor capabilities
 fprintf("-----------------------------------------------------------------\n");
 fprintf("Number of Orbits by Each Sat. within Propogation Time: %.0f\n", j_n);
-fprintf("Largest Gap in Longitude of Passes: %.3f degrees\n", max(diff(C_allPasses)));
-fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPasses))/360)*(2*pi*R_geo*cosd(Lat)));
+fprintf("Largest Gap in Longitude of Passes: %.3f degrees\n", max(diff(C_allPassesUnique)));
+fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPassesUnique))/360)*(2*pi*R_geo*cosd(Lat)));
 
 %% Calculation - Determination of Visible Longitudes
 
@@ -138,6 +138,7 @@ fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPasses))
 % Potential Issues:
 % - Incorrect Coverage Range of Sensor (high altitudes showing lower
 %   coverage than lower altitudes
+% - For above issue --> altitudes above 987km seem to work fine
 
 % Basic Sensor Parameters
 R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
