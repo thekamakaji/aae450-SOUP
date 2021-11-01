@@ -1,6 +1,6 @@
 % 2nd Order Analysis - Constellation Designer
 % Author: V. Swaminathan
-% Version: 10/14/2021 1246 EST
+% Version: 10/13/2021 1413 EST
 % Purpose: To help develop Team SoUP's satellite constellation to meet
 %          requirements of AAE450 Project (2nd order analysis)
 % 
@@ -18,9 +18,9 @@ R_A = 6378.137; % Earth Equatorial Radius [km]
 R_B = 6356.752; % Earth Polar Radius [km]
 MU = 3.986e5; % Gravitational Param. for Earth [km^3/s^2]
 J2 = 1082.63e-6; % J2 param. for Earth
-SideDay_E = 86164; % Sidereal Day Length [s]
+SideDay_E = 86164.0910; % Sidereal Day Length [s]
 SolarDay_E = 86400; % Solar Day Length [s]
-W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
+W_E = -360/(3600*24); % Rate of Earth Rotation [deg./s]
 
 %% Surface Target/Propogation Definitions
 
@@ -39,9 +39,9 @@ C_spacing = 0; % Spacing b/w satellites in adjacent planes (true anomaly "slots"
 S_phi = 60; % Half-cone boresight angle of Antennae [deg.] (Incd. Ang.)
 
 % Orbital Parameters for Reference Receiver (Rx)
-Rx_a = 987 + R_A; % Orbit radius [km] (semimajor axis (circular))
+Rx_a = 750 + R_A; % Orbit radius [km] (semimajor axis (circular))
 Rx_e = 0; % Eccentricity
-Rx_i = 99.7; % Inclination [deg.]
+Rx_i = 98; % Inclination [deg.]
 Rx_RAAN = 0; % Right Ascension of AN [deg.]
 Rx_w = 0; % Argument of Perigee [deg.]
 
@@ -82,7 +82,7 @@ Rx_dANfromJ = regressionRateAN(Rx_n, J2, R_A, Rx_p, Rx_i, Rx_e); % Shift in AN c
 Rx_dLong = Rx_Pn * (W_E + Rx_dANfromJ); % Shift in Surface Longitude per orbit [deg.]
 Rx_surfLongPass1 = startLong + surfaceLong(Rx_w, Rx_v, Rx_RAAN, Rx_i, Rx_dLong); % Surface Longitude of 1st pass over target latitude [deg.]
 
-j_n = (timeTotal / Rx_Pn); % Number of orbits within propogation time
+j_n = (timeTotal / Rx_Pn); % Number of orbits within propagation time
 
 % Surface Longitudes @ Consecutive Passes [deg.]
 % !!! NEED TO ADD DESCENDING PASS COVERAGE !!!
@@ -121,7 +121,7 @@ end
 
 % Normalize Passes to 360 deg. Earth
 C_allPasses = wrapTo180(C_allPasses);
-C_allPassesUnique = unique(C_allPasses);
+C_allPasses = unique(C_allPasses);
 
 % Geodetic Radius for Circumference @ Target Lat.
 R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
@@ -129,8 +129,8 @@ R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
 % Print out "gaps" in Longitude passes (not accounting for sensor capabilities
 fprintf("-----------------------------------------------------------------\n");
 fprintf("Number of Orbits by Each Sat. within Propogation Time: %.0f\n", j_n);
-fprintf("Largest Gap in Longitude of Passes: %.3f degrees\n", max(diff(C_allPassesUnique)));
-fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPassesUnique))/360)*(2*pi*R_geo*cosd(Lat)));
+fprintf("Largest Gap in Longitude of Passes: %.3f degrees\n", max(diff(C_allPasses)));
+fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPasses))/360)*(2*pi*R_geo*cosd(Lat)));
 
 %% Calculation - Determination of Visible Longitudes
 
@@ -138,7 +138,6 @@ fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPassesUn
 % Potential Issues:
 % - Incorrect Coverage Range of Sensor (high altitudes showing lower
 %   coverage than lower altitudes
-% - For above issue --> altitudes above 987km seem to work fine
 
 % Basic Sensor Parameters
 R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
@@ -149,11 +148,17 @@ SDA = surfDA(HGRA, Lat); % Surface Dihedral Angle (longitude coverage of sensor)
 % Print out Longitude Coverage Range of Sensor
 fprintf("-----------------------------------------------------------------\n");
 fprintf("Coverage Range of Sensor in Surface Longitude: %.3f degrees\n", SDA);
-fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", (SDA/360)*(2*pi*R_geo*cosd(Lat)));
+fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", ...
+    (SDA/360)*(2*pi*R_geo*cosd(Lat)));
 fprintf("-----------------------------------------------------------------\n");
 
 % Longitude Coverage Range - Discretization of Coverage
 % !!! IMPLEMENTATION NEEDED !!!
+minDiscLong = C_allPasses - HGRA; % minimum discretized longitude visible 
+% by a pass of longitude λφ due to HGRA (Λ) at the target latitude
+% Define array of longitudes using minDiscLong
+% Define ground track coordinates!
+
 
 %% Plots of MRT/ART and Design Spaces
 % !!! IMPLEMENTATION NEEDED !!!
