@@ -24,7 +24,7 @@ W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Surface Target/Propogation Definitions
 
-Lat = 0; % Target Latitude(s) for Observation [deg.] (|Lat| <= Rx_i)
+Lat = 30; % Target Latitude(s) for Observation [deg.] (|Lat| <= Rx_i)
 startLong = 0; % Starting Longitude of Reciever in Ref. Plane [deg.]
 timeTotal = 3*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days (24 hrs.)
 
@@ -39,7 +39,7 @@ C_spacing = 0; % Spacing b/w satellites in adjacent planes (true anomaly "slots"
 S_phi = 60; % Half-cone boresight angle of Antennae [deg.] (Incd. Ang.)
 
 % Orbital Parameters for Reference Receiver (Rx)
-Rx_a = 400 + R_A; % Orbit radius [km] (semimajor axis (circular))
+Rx_a = 415 + R_A; % Orbit radius [km] (semimajor axis (circular))
 Rx_e = 0; % Eccentricity
 Rx_i = makeSSO(Rx_a); % Inclination [deg.]
 Rx_RAAN = 0; % Right Ascension of AN [deg.]
