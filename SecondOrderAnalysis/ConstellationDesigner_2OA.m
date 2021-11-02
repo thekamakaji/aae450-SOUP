@@ -31,7 +31,7 @@ timeTotal = 3*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days
 %% Satellite/Constellation Definitions
 
 % Define Walker Constellation Parameters to Test
-C_totalSats = 16; % Total Number of Rx satellites in Constellation
+C_totalSats = 24; % Total Number of Rx satellites in Constellation
 C_planes = 1; % Number of Equally spaced orbital planes
 C_spacing = 0; % Spacing b/w satellites in adjacent planes (true anomaly "slots")
 
@@ -39,9 +39,9 @@ C_spacing = 0; % Spacing b/w satellites in adjacent planes (true anomaly "slots"
 S_phi = 60; % Half-cone boresight angle of Antennae [deg.] (Incd. Ang.)
 
 % Orbital Parameters for Reference Receiver (Rx)
-Rx_a = 987 + R_A; % Orbit radius [km] (semimajor axis (circular))
+Rx_a = 400 + R_A; % Orbit radius [km] (semimajor axis (circular))
 Rx_e = 0; % Eccentricity
-Rx_i = 99.7; % Inclination [deg.]
+Rx_i = makeSSO(Rx_a); % Inclination [deg.]
 Rx_RAAN = 0; % Right Ascension of AN [deg.]
 Rx_w = 0; % Argument of Perigee [deg.]
 
@@ -100,14 +100,17 @@ C_satsPerPlane = C_totalSats/C_planes; % Number of Satellites in Each Orbital Pl
 C_surfLongFirst(1,:) = Rx_surfLong;
 for m = 1:1:(C_planes - 1)
     C_surfLongFirst(m+1,:) = Rx_surfLong + 2*pi*m*((1/C_planes)+(C_spacing/C_totalSats));
+    %C_surfLongFirst(m+1,:) = Rx_surfLong + 360*m*((1/C_planes)+(C_spacing/C_totalSats));
 end
 
 % Add Longitude Passes of Multiple Satellites in Same Planes @ Target Lat. [deg.]
+% CHECK FOR ACCURACY --> Issues found
+% - Sporadic changes in satellite coverage even as sat. num. increases
 for x = 1:1:C_planes
     tempVec = C_surfLongFirst(x,:);
     for L = 1:1:(C_satsPerPlane - 1)
         temp = C_surfLongFirst(x,:) + (L/C_satsPerPlane)*Rx_dLong;
-        tempVec = [tempVec, temp];
+        tempVec = [tempVec temp];
     end
     C_surfLongAll(x,:) = tempVec;
 end
@@ -138,7 +141,7 @@ fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPassesUn
 % Potential Issues:
 % - Incorrect Coverage Range of Sensor (high altitudes showing lower
 %   coverage than lower altitudes
-% - For above issue --> altitudes above 987km seem to work fine
+% - For above issue --> altitudes at and above 987km seem to work fine
 
 % Basic Sensor Parameters
 R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]

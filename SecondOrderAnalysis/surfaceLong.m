@@ -10,5 +10,7 @@ function surfLong = surfaceLong(w, v, AN, i, dLong)
     den1 = cosd(w + v)*cosd(AN) - sind(w + v)*sind(AN)*cosd(i);
     
     surfLong = atand(num1/den1) + (v/(2*pi))*dLong;
+    %surfLong = atand(num1/den1) + (v/(360))*dLong;
+
 
 end

@@ -2,4 +2,4 @@
 function [n] = specularNum(d_swath, resolution)
   A = pi*(d_swath^2)/4; % Area covered by ground swath
   n = A / resolution; % Specular grid points needed
-endfunction
+end
