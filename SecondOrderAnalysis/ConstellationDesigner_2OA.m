@@ -24,14 +24,14 @@ W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Surface Target/Propogation Definitions
 
-Lat = 30; % Target Latitude(s) for Observation [deg.] (|Lat| <= Rx_i)
+Lat = 70; % Target Latitude(s) for Observation [deg.] (|Lat| <= Rx_i)
 startLong = 0; % Starting Longitude of Reciever in Ref. Plane [deg.]
-timeTotal = 3*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days (24 hrs.)
+timeTotal = 15*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days (24 hrs.)
 
 %% Satellite/Constellation Definitions
 
 % Define Walker Constellation Parameters to Test
-C_totalSats = 24; % Total Number of Rx satellites in Constellation
+C_totalSats = 12; % Total Number of Rx satellites in Constellation
 C_planes = 1; % Number of Equally spaced orbital planes
 C_spacing = 0; % Spacing b/w satellites in adjacent planes (true anomaly "slots")
 
@@ -39,7 +39,7 @@ C_spacing = 0; % Spacing b/w satellites in adjacent planes (true anomaly "slots"
 S_phi = 60; % Half-cone boresight angle of Antennae [deg.] (Incd. Ang.)
 
 % Orbital Parameters for Reference Receiver (Rx)
-Rx_a = 415 + R_A; % Orbit radius [km] (semimajor axis (circular))
+Rx_a = 523 + R_A; % Orbit radius [km] (semimajor axis (circular))
 Rx_e = 0; % Eccentricity
 Rx_i = makeSSO(Rx_a); % Inclination [deg.]
 Rx_RAAN = 0; % Right Ascension of AN [deg.]
@@ -161,7 +161,63 @@ fprintf("-----------------------------------------------------------------\n");
 %% Plots of MRT/ART and Design Spaces
 % !!! IMPLEMENTATION NEEDED !!!
 
+%% Plots for SWE Verification - Lattitude = 0 deg. (Worst Case Scenario)
 
+main_plane_long = 0:13.984:100;
+second_plane_long = 0:19.194:100;
+x = 0:0.1:100;
+
+for n = 1:1:length(main_plane_long)
+    x_temp = x + main_plane_long(n);
+    x_main(n,:) = x_temp;
+    y_main(n,:) = tand(97.08).*x;
+end
+for n = 1:1:length(second_plane_long)
+    x_temp = x + second_plane_long(n);
+    x_second(n,:) = x_temp;
+    y_second(n,:) = tand(97.49).*x;
+end
+
+figure(1)
+hold on
+grid on
+for n=1:1:length(main_plane_long)
+    plot(x_main(n,:), y_main(n,:),"r")
+end
+for n=1:1:length(second_plane_long)
+    plot(x_second(n,:), y_second(n,:),"b")
+end
+axis([0 100 -100 0]);
+title("SWE Cross Verification at Latitude = 0 deg.")
+
+%% Plots for SWE Verification - Lattitude = 70 deg. (Best Case Scenario)
+
+main_plane_long = 0:4.738:100;
+second_plane_long = 0:6.545:100;
+x = 0:0.1:100;
+
+for n = 1:1:length(main_plane_long)
+    x_temp = x + main_plane_long(n);
+    x_main(n,:) = x_temp;
+    y_main(n,:) = tand(97.08).*x;
+end
+for n = 1:1:length(second_plane_long)
+    x_temp = x + second_plane_long(n);
+    x_second(n,:) = x_temp;
+    y_second(n,:) = tand(97.49).*x;
+end
+
+figure(2)
+hold on
+grid on
+for n=1:1:length(main_plane_long)
+    plot(x_main(n,:), y_main(n,:),"r")
+end
+for n=1:1:length(second_plane_long)
+    plot(x_second(n,:), y_second(n,:),"b")
+end
+axis([0 100 -100 0]);
+title("SWE Cross Verification at Latitude = 70 deg.")
 
 
 
