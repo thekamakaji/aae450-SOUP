@@ -10,8 +10,13 @@
 % - "Coverage" requirement verification (soft, mainly for SWE)
 
 %% Initialize Workspace
+
+fprintf("Clearing Workspace...")
+
 clear;
 close all;
+
+fprintf("Done!\n")
 
 %% Constant Parameters
 R_A = 6378.137; % Earth Equatorial Radius [km]
@@ -23,14 +28,18 @@ SolarDay_E = 86400; % Solar Day Length [s]
 W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Satellite Scenario Definition
-p_days = 1; % Days of simulation propogation
-viewOpt_3D = 1; % 1 = show 3D viewer, 0 = 2D only
+p_days = 0.5; % Days of simulation propogation
+viewOpt_3D = 0; % 1 = show 3D viewer, 0 = 2D only
 
 startTime = datetime(2020,5,11,12,35,38); % Start Epoch
 stopTime = startTime + days(p_days); % End Epoch
 sampleTime = 60; % Sample Time [s]
 
+fprintf("Initializing orbital simulation...")
+
 sc_main = satelliteScenario(startTime, stopTime, sampleTime);
+
+fprintf("Done!\n")
 
 %% Tx Satellite Import
 
@@ -71,6 +80,9 @@ Rx_w = 0; % Argument of Perigee [deg.]
 Rx_TA = linspace(0,360,numsats_main); % True Anomaly Values [deg.]
 
 % PRIMARY ORBITAL PLANE (24)
+
+fprintf("Defining Constellation - Main Plane (24)...")
+
 Rx_1_1 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(1), "OrbitPropagator","sgp4");
 Rx_1_2 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(2), "OrbitPropagator","sgp4");
 Rx_1_3 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(3), "OrbitPropagator","sgp4");
@@ -96,6 +108,8 @@ Rx_1_22 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(22), "OrbitPropaga
 Rx_1_23 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(23), "OrbitPropagator","sgp4");
 Rx_1_24 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(24), "OrbitPropagator","sgp4");
 
+fprintf("Done!\n")
+
 % COMMON FACTORS - Second Plane
 Rx_a = (523 + R_A)*1000; % Orbit radius [km] (semimajor axis (circular))
 Rx_e = 0; % Eccentricity
@@ -106,6 +120,9 @@ Rx_w = 0; % Argument of Perigee [deg.]
 Rx_TA = linspace(0,360,numsats_second); % True Anomaly Values [deg.]
 
 % SECONDARY ORBITAL PLANE (12)
+
+fprintf("Defining Constellation - Secondary Plane (12)...")
+
 Rx_2_1 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(1), "OrbitPropagator","sgp4");
 Rx_2_2 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(2), "OrbitPropagator","sgp4");
 Rx_2_3 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(3), "OrbitPropagator","sgp4");
@@ -119,107 +136,117 @@ Rx_2_10 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(10), "OrbitPropaga
 Rx_2_11 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(11), "OrbitPropagator","sgp4");
 Rx_2_12 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(12), "OrbitPropagator","sgp4");
 
+fprintf("Done!\n")
+
 %% Orbital Simulation/Ground Tracks in 3D
 
 if viewOpt_3D == 1
+    
+    fprintf("Preparing 3D Viewer...")
 
-% Viewer Options - Colors (Change Secondary Plane)
-Rx_2_1.MarkerColor = [0 1 0];
-Rx_2_1.Orbit.LineColor = [0 1 0];
-Rx_2_1.LabelFontColor = [0 1 0];
+    % Viewer Options - Colors (Change Secondary Plane)
+    Rx_2_1.MarkerColor = [0 1 0];
+    Rx_2_1.Orbit.LineColor = [0 1 0];
+    Rx_2_1.LabelFontColor = [0 1 0];
+    
+    Rx_2_2.MarkerColor = [0 1 0];
+    Rx_2_2.Orbit.LineColor = [0 1 0];
+    Rx_2_2.LabelFontColor = [0 1 0];
+    
+    Rx_2_3.MarkerColor = [0 1 0];
+    Rx_2_3.Orbit.LineColor = [0 1 0];
+    Rx_2_3.LabelFontColor = [0 1 0];
+    
+    Rx_2_4.MarkerColor = [0 1 0];
+    Rx_2_4.Orbit.LineColor = [0 1 0];
+    Rx_2_4.LabelFontColor = [0 1 0];
+    
+    Rx_2_5.MarkerColor = [0 1 0];
+    Rx_2_5.Orbit.LineColor = [0 1 0];
+    Rx_2_5.LabelFontColor = [0 1 0];
+    
+    Rx_2_6.MarkerColor = [0 1 0];
+    Rx_2_6.Orbit.LineColor = [0 1 0];
+    Rx_2_6.LabelFontColor = [0 1 0];
+    
+    Rx_2_7.MarkerColor = [0 1 0];
+    Rx_2_7.Orbit.LineColor = [0 1 0];
+    Rx_2_7.LabelFontColor = [0 1 0];
+    
+    Rx_2_8.MarkerColor = [0 1 0];
+    Rx_2_8.Orbit.LineColor = [0 1 0];
+    Rx_2_8.LabelFontColor = [0 1 0];
+    
+    Rx_2_9.MarkerColor = [0 1 0];
+    Rx_2_9.Orbit.LineColor = [0 1 0];
+    Rx_2_9.LabelFontColor = [0 1 0];
+    
+    Rx_2_10.MarkerColor = [0 1 0];
+    Rx_2_10.Orbit.LineColor = [0 1 0];
+    Rx_2_10.LabelFontColor = [0 1 0];
+    
+    Rx_2_11.MarkerColor = [0 1 0];
+    Rx_2_11.Orbit.LineColor = [0 1 0];
+    Rx_2_11.LabelFontColor = [0 1 0];
+    
+    Rx_2_12.MarkerColor = [0 1 0];
+    Rx_2_12.Orbit.LineColor = [0 1 0];
+    Rx_2_12.LabelFontColor = [0 1 0];
+    
+    % Initialize Orbital Scenario Viewer
+    View_Orb = satelliteScenarioViewer(sc_main);
+    
+    % Initialize Ground Tracks
+    groundTrack(Rx_1_1, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_2, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_3, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_4, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_5, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_6, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_7, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_8, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_9, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_10, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_11, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_12, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_13, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_14, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_15, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_16, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_17, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_18, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_19, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_20, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_21, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_22, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_23, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_1_24, "LeadTime", p_days*24*60*60);
+    
+    groundTrack(Rx_2_1, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_2_2, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_2_3, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_2_4, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_2_5, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_2_6, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_2_7, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_2_8, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_2_9, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_2_10, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_2_11, "LeadTime", p_days*24*60*60);
+    groundTrack(Rx_2_12, "LeadTime", p_days*24*60*60);
+    
+    fprintf("Done!\n")
 
-Rx_2_2.MarkerColor = [0 1 0];
-Rx_2_2.Orbit.LineColor = [0 1 0];
-Rx_2_2.LabelFontColor = [0 1 0];
+    % Visual of Orbital Propagation
+    play(sc_main);
 
-Rx_2_3.MarkerColor = [0 1 0];
-Rx_2_3.Orbit.LineColor = [0 1 0];
-Rx_2_3.LabelFontColor = [0 1 0];
-
-Rx_2_4.MarkerColor = [0 1 0];
-Rx_2_4.Orbit.LineColor = [0 1 0];
-Rx_2_4.LabelFontColor = [0 1 0];
-
-Rx_2_5.MarkerColor = [0 1 0];
-Rx_2_5.Orbit.LineColor = [0 1 0];
-Rx_2_5.LabelFontColor = [0 1 0];
-
-Rx_2_6.MarkerColor = [0 1 0];
-Rx_2_6.Orbit.LineColor = [0 1 0];
-Rx_2_6.LabelFontColor = [0 1 0];
-
-Rx_2_7.MarkerColor = [0 1 0];
-Rx_2_7.Orbit.LineColor = [0 1 0];
-Rx_2_7.LabelFontColor = [0 1 0];
-
-Rx_2_8.MarkerColor = [0 1 0];
-Rx_2_8.Orbit.LineColor = [0 1 0];
-Rx_2_8.LabelFontColor = [0 1 0];
-
-Rx_2_9.MarkerColor = [0 1 0];
-Rx_2_9.Orbit.LineColor = [0 1 0];
-Rx_2_9.LabelFontColor = [0 1 0];
-
-Rx_2_10.MarkerColor = [0 1 0];
-Rx_2_10.Orbit.LineColor = [0 1 0];
-Rx_2_10.LabelFontColor = [0 1 0];
-
-Rx_2_11.MarkerColor = [0 1 0];
-Rx_2_11.Orbit.LineColor = [0 1 0];
-Rx_2_11.LabelFontColor = [0 1 0];
-
-Rx_2_12.MarkerColor = [0 1 0];
-Rx_2_12.Orbit.LineColor = [0 1 0];
-Rx_2_12.LabelFontColor = [0 1 0];
-
-% Initialize Orbital Scenario Viewer
-View_Orb = satelliteScenarioViewer(sc_main);
-
-% Initialize Ground Tracks
-groundTrack(Rx_1_1, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_2, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_3, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_4, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_5, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_6, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_7, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_8, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_9, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_10, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_11, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_12, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_13, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_14, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_15, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_16, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_17, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_18, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_19, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_20, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_21, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_22, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_23, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_1_24, "LeadTime", p_days*24*60*60);
-
-groundTrack(Rx_2_1, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_2_2, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_2_3, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_2_4, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_2_5, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_2_6, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_2_7, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_2_8, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_2_9, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_2_10, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_2_11, "LeadTime", p_days*24*60*60);
-groundTrack(Rx_2_12, "LeadTime", p_days*24*60*60);
-
-% Visual of Orbital Propagation
-play(sc_main);
-
+else
+    fprintf("3D VIEWER DISABLED - ENABLE IN SCENARIO DEFINITION SECTION\n")
 end
 
 %% Data Processing/Export
+
+fprintf("Processing Data from Orbit Propagation...")
 
 % Tx Location/Time History
 
@@ -265,9 +292,15 @@ end
 
 % Tx/Rx Relative Position History
 
+fprintf("Done!\n")
+
 %% Converting to LLA --> Need help speeding up?
 
+fprintf("Converting position data from ECI to LLA Format...\n")
 poolobj = parpool(4); % Parallel Pool w/ 4 Threads
+
+fprintf('Progress Bar: %.0f Iterations needed\n', length(pos_Rx_1_1));
+fprintf([repmat('.',1,length(pos_Rx_1_1)) '\n\n']);
 
 % Data Conversion - Multithreaded
 parfor n = 1:length(pos_Rx_1_1)
@@ -312,17 +345,23 @@ parfor n = 1:length(pos_Rx_1_1)
     lla_2_11(n,:) = eci2lla(pos_Rx_2_11(:,n)', datevec(time_vec(n)));
     lla_2_12(n,:) = eci2lla(pos_Rx_2_12(:,n)', datevec(time_vec(n)));
 
+    % Loop Visualization - Out-of-order Execution
+    %fprintf("Iteration %.0f / %.0f completed\n", n, length(pos_Rx_1_1));
+    fprintf('\b|\n');
+
 end
 delete(poolobj); % Close parallel processing pool
 
 %% Coverage of the Entire World
 
+fprintf("\nPlotting World Map Coverage...")
 figure(2)
 worldmap world
 load coastlines
 [latcells, loncells] = polysplit(coastlat, coastlon);
 plotm(coastlat, coastlon, 'black')
 hold on
+title("Worldwide Coverage")
 
 % Main Plane - 24
 plotm(lla_1_1(:,1), lla_1_1(:,2), 'red')
@@ -363,16 +402,21 @@ plotm(lla_2_9(:,1), lla_2_9(:,2), 'blue')
 plotm(lla_2_10(:,1), lla_2_10(:,2), 'blue')
 plotm(lla_2_11(:,1), lla_2_11(:,2), 'blue')
 plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
+
+fprintf("Done!\n")
 
 %% Coverage of Europe
+
+fprintf("Plotting Europe Map Coverage...")
 figure(3)
 h_1 = worldmap('Europe');
-getm(h_1,"MapProjection")
+getm(h_1,"MapProjection");
 geoshow('landareas.shp', 'FaceColor', [0.15 0.5 0.15])
 geoshow('worldlakes.shp', 'FaceColor', 'cyan')
 geoshow('worldrivers.shp', 'Color', 'blue')
 geoshow('worldcities.shp', 'Marker', '.',...
                            'MarkerEdgeColor', 'magenta')
+title("Coverage of Europe")
 
 % Main Plane - 24
 plotm(lla_1_1(:,1), lla_1_1(:,2), 'red')
@@ -413,16 +457,21 @@ plotm(lla_2_9(:,1), lla_2_9(:,2), 'blue')
 plotm(lla_2_10(:,1), lla_2_10(:,2), 'blue')
 plotm(lla_2_11(:,1), lla_2_11(:,2), 'blue')
 plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
+
+fprintf("Done!\n")
 
 %% Coverage of USA
+
+fprintf("Plotting USA Map Coverage...")
 figure(4)
 h_2 = worldmap('USA');
-getm(h_2,"MapProjection")
+getm(h_2,"MapProjection");
 geoshow('landareas.shp', 'FaceColor', [0.15 0.5 0.15])
 geoshow('worldlakes.shp', 'FaceColor', 'cyan')
 geoshow('worldrivers.shp', 'Color', 'blue')
 geoshow('worldcities.shp', 'Marker', '.',...
                            'MarkerEdgeColor', 'magenta')
+title("Coverage of USA")
 
 % Main Plane - 24
 plotm(lla_1_1(:,1), lla_1_1(:,2), 'red')
@@ -463,17 +512,21 @@ plotm(lla_2_9(:,1), lla_2_9(:,2), 'blue')
 plotm(lla_2_10(:,1), lla_2_10(:,2), 'blue')
 plotm(lla_2_11(:,1), lla_2_11(:,2), 'blue')
 plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
+
+fprintf("Done!\n")
 
 %% Coverage of 100km x 100km grid at Equator
 
+fprintf("Plotting 100x100km @ Equator Coverage...")
 figure(5)
 h_3 = worldmap([-.45 0.45], [-.45 0.45]);
-getm(h_3,"MapProjection")
+getm(h_3,"MapProjection");
 geoshow('landareas.shp', 'FaceColor', [0.15 0.5 0.15])
 geoshow('worldlakes.shp', 'FaceColor', 'cyan')
 geoshow('worldrivers.shp', 'Color', 'blue')
 geoshow('worldcities.shp', 'Marker', '.',...
                            'MarkerEdgeColor', 'magenta')
+title("100x100 km at Equator")
 
 % Main Plane - 24
 plotm(lla_1_1(:,1), lla_1_1(:,2), 'red')
@@ -514,17 +567,21 @@ plotm(lla_2_9(:,1), lla_2_9(:,2), 'blue')
 plotm(lla_2_10(:,1), lla_2_10(:,2), 'blue')
 plotm(lla_2_11(:,1), lla_2_11(:,2), 'blue')
 plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
+
+fprintf("Done!\n")
 
 %% Coverage of 100km x 100km grid at Latitude = 70 deg.
 
+fprintf("Plotting 100x100km @ Lat. = 70 deg. Coverage...")
 figure(6)
 h_4 = worldmap([69.55 70.45], [-.45 0.45]);
-getm(h_4,"MapProjection")
+getm(h_4,"MapProjection");
 geoshow('landareas.shp', 'FaceColor', [0.15 0.5 0.15])
 geoshow('worldlakes.shp', 'FaceColor', 'cyan')
 geoshow('worldrivers.shp', 'Color', 'blue')
 geoshow('worldcities.shp', 'Marker', '.',...
                            'MarkerEdgeColor', 'magenta')
+title("100x100 km at Lat = 70 deg.")
 
 % Main Plane - 24
 plotm(lla_1_1(:,1), lla_1_1(:,2), 'red')
@@ -566,10 +623,5 @@ plotm(lla_2_10(:,1), lla_2_10(:,2), 'blue')
 plotm(lla_2_11(:,1), lla_2_11(:,2), 'blue')
 plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
 
-
-
-
-
-
-
+fprintf("Done!\n")
 
