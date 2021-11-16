@@ -10,7 +10,7 @@
 % - "Coverage" requirement verification (soft, mainly for SWE)
 
 %% Initialize Workspace
-clear all;
+clear;
 close all;
 
 %% Constant Parameters
@@ -23,7 +23,8 @@ SolarDay_E = 86400; % Solar Day Length [s]
 W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Satellite Scenario Definition
-p_days = 15; % Days of simulation propogation
+p_days = 1; % Days of simulation propogation
+viewOpt_3D = 1; % 1 = show 3D viewer, 0 = 2D only
 
 startTime = datetime(2020,5,11,12,35,38); % Start Epoch
 stopTime = startTime + days(p_days); % End Epoch
@@ -118,6 +119,106 @@ Rx_2_10 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(10), "OrbitPropaga
 Rx_2_11 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(11), "OrbitPropagator","sgp4");
 Rx_2_12 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(12), "OrbitPropagator","sgp4");
 
+%% Orbital Simulation/Ground Tracks in 3D
+
+if viewOpt_3D == 1
+
+% Viewer Options - Colors (Change Secondary Plane)
+Rx_2_1.MarkerColor = [0 1 0];
+Rx_2_1.Orbit.LineColor = [0 1 0];
+Rx_2_1.LabelFontColor = [0 1 0];
+
+Rx_2_2.MarkerColor = [0 1 0];
+Rx_2_2.Orbit.LineColor = [0 1 0];
+Rx_2_2.LabelFontColor = [0 1 0];
+
+Rx_2_3.MarkerColor = [0 1 0];
+Rx_2_3.Orbit.LineColor = [0 1 0];
+Rx_2_3.LabelFontColor = [0 1 0];
+
+Rx_2_4.MarkerColor = [0 1 0];
+Rx_2_4.Orbit.LineColor = [0 1 0];
+Rx_2_4.LabelFontColor = [0 1 0];
+
+Rx_2_5.MarkerColor = [0 1 0];
+Rx_2_5.Orbit.LineColor = [0 1 0];
+Rx_2_5.LabelFontColor = [0 1 0];
+
+Rx_2_6.MarkerColor = [0 1 0];
+Rx_2_6.Orbit.LineColor = [0 1 0];
+Rx_2_6.LabelFontColor = [0 1 0];
+
+Rx_2_7.MarkerColor = [0 1 0];
+Rx_2_7.Orbit.LineColor = [0 1 0];
+Rx_2_7.LabelFontColor = [0 1 0];
+
+Rx_2_8.MarkerColor = [0 1 0];
+Rx_2_8.Orbit.LineColor = [0 1 0];
+Rx_2_8.LabelFontColor = [0 1 0];
+
+Rx_2_9.MarkerColor = [0 1 0];
+Rx_2_9.Orbit.LineColor = [0 1 0];
+Rx_2_9.LabelFontColor = [0 1 0];
+
+Rx_2_10.MarkerColor = [0 1 0];
+Rx_2_10.Orbit.LineColor = [0 1 0];
+Rx_2_10.LabelFontColor = [0 1 0];
+
+Rx_2_11.MarkerColor = [0 1 0];
+Rx_2_11.Orbit.LineColor = [0 1 0];
+Rx_2_11.LabelFontColor = [0 1 0];
+
+Rx_2_12.MarkerColor = [0 1 0];
+Rx_2_12.Orbit.LineColor = [0 1 0];
+Rx_2_12.LabelFontColor = [0 1 0];
+
+% Initialize Orbital Scenario Viewer
+View_Orb = satelliteScenarioViewer(sc_main);
+
+% Initialize Ground Tracks
+groundTrack(Rx_1_1, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_2, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_3, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_4, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_5, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_6, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_7, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_8, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_9, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_10, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_11, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_12, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_13, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_14, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_15, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_16, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_17, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_18, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_19, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_20, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_21, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_22, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_23, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_1_24, "LeadTime", p_days*24*60*60);
+
+groundTrack(Rx_2_1, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_2_2, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_2_3, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_2_4, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_2_5, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_2_6, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_2_7, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_2_8, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_2_9, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_2_10, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_2_11, "LeadTime", p_days*24*60*60);
+groundTrack(Rx_2_12, "LeadTime", p_days*24*60*60);
+
+% Visual of Orbital Propagation
+play(sc_main);
+
+end
+
 %% Data Processing/Export
 
 % Tx Location/Time History
@@ -166,10 +267,10 @@ Rx_2_12 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(12), "OrbitPropaga
 
 %% Converting to LLA --> Need help speeding up?
 
-%poolobj = parpool(4); % Parallel Pool w/ 4 Threads
+poolobj = parpool(4); % Parallel Pool w/ 4 Threads
 
 % Data Conversion - Multithreaded
-parfor n = 1:1:length(pos_Rx_1_1)
+parfor n = 1:length(pos_Rx_1_1)
 
     % Main Plane - 24
     lla_1_1(n,:) = eci2lla(pos_Rx_1_1(:,n)', datevec(time_vec(n)));    
@@ -212,7 +313,7 @@ parfor n = 1:1:length(pos_Rx_1_1)
     lla_2_12(n,:) = eci2lla(pos_Rx_2_12(:,n)', datevec(time_vec(n)));
 
 end
-%delete(poolobj); % Close parallel processing pool
+delete(poolobj); % Close parallel processing pool
 
 %% Coverage of the Entire World
 
@@ -465,101 +566,7 @@ plotm(lla_2_10(:,1), lla_2_10(:,2), 'blue')
 plotm(lla_2_11(:,1), lla_2_11(:,2), 'blue')
 plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
 
-%% Orbital Simulation/Ground Tracks
 
-% % Viewer Options - Colors (Change Secondary Plane)
-% Rx_2_1.MarkerColor = [0 1 0];
-% Rx_2_1.Orbit.LineColor = [0 1 0];
-% Rx_2_1.LabelFontColor = [0 1 0];
-% 
-% Rx_2_2.MarkerColor = [0 1 0];
-% Rx_2_2.Orbit.LineColor = [0 1 0];
-% Rx_2_2.LabelFontColor = [0 1 0];
-% 
-% Rx_2_3.MarkerColor = [0 1 0];
-% Rx_2_3.Orbit.LineColor = [0 1 0];
-% Rx_2_3.LabelFontColor = [0 1 0];
-% 
-% Rx_2_4.MarkerColor = [0 1 0];
-% Rx_2_4.Orbit.LineColor = [0 1 0];
-% Rx_2_4.LabelFontColor = [0 1 0];
-% 
-% Rx_2_5.MarkerColor = [0 1 0];
-% Rx_2_5.Orbit.LineColor = [0 1 0];
-% Rx_2_5.LabelFontColor = [0 1 0];
-% 
-% Rx_2_6.MarkerColor = [0 1 0];
-% Rx_2_6.Orbit.LineColor = [0 1 0];
-% Rx_2_6.LabelFontColor = [0 1 0];
-% 
-% Rx_2_7.MarkerColor = [0 1 0];
-% Rx_2_7.Orbit.LineColor = [0 1 0];
-% Rx_2_7.LabelFontColor = [0 1 0];
-% 
-% Rx_2_8.MarkerColor = [0 1 0];
-% Rx_2_8.Orbit.LineColor = [0 1 0];
-% Rx_2_8.LabelFontColor = [0 1 0];
-% 
-% Rx_2_9.MarkerColor = [0 1 0];
-% Rx_2_9.Orbit.LineColor = [0 1 0];
-% Rx_2_9.LabelFontColor = [0 1 0];
-% 
-% Rx_2_10.MarkerColor = [0 1 0];
-% Rx_2_10.Orbit.LineColor = [0 1 0];
-% Rx_2_10.LabelFontColor = [0 1 0];
-% 
-% Rx_2_11.MarkerColor = [0 1 0];
-% Rx_2_11.Orbit.LineColor = [0 1 0];
-% Rx_2_11.LabelFontColor = [0 1 0];
-% 
-% Rx_2_12.MarkerColor = [0 1 0];
-% Rx_2_12.Orbit.LineColor = [0 1 0];
-% Rx_2_12.LabelFontColor = [0 1 0];
-% 
-% % Initialize Orbital Scenario Viewer
-% View_Orb = satelliteScenarioViewer(sc_main, "Dimension","2D");
-% 
-% % Initialize Ground Tracks
-% groundTrack(Rx_1_1, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_2, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_3, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_4, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_5, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_6, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_7, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_8, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_9, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_10, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_11, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_12, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_13, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_14, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_15, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_16, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_17, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_18, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_19, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_20, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_21, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_22, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_23, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_1_24, "LeadTime", p_days*24*60*60);
-% 
-% groundTrack(Rx_2_1, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_2_2, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_2_3, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_2_4, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_2_5, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_2_6, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_2_7, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_2_8, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_2_9, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_2_10, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_2_11, "LeadTime", p_days*24*60*60);
-% groundTrack(Rx_2_12, "LeadTime", p_days*24*60*60);
-% 
-% % Visual of Orbital Propagation
-% play(sc_main);
 
 
 
