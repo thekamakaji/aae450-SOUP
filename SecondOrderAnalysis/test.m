@@ -1,0 +1,51 @@
+% Test of Plots for Numerical solver
+
+figure(5)
+h_4 = worldmap([0 0.899], [0 0.899]);
+getm(h_4,"MapProjection")
+geoshow('landareas.shp', 'FaceColor', [0.15 0.5 0.15])
+geoshow('worldlakes.shp', 'FaceColor', 'cyan')
+geoshow('worldrivers.shp', 'Color', 'blue')
+geoshow('worldcities.shp', 'Marker', '.',...
+                           'MarkerEdgeColor', 'magenta')
+
+% Main Plane - 24
+plotm(lla_1_1(:,1), lla_1_1(:,2), 'red')
+plotm(lla_1_2(:,1), lla_1_2(:,2), 'red')
+plotm(lla_1_3(:,1), lla_1_3(:,2), 'red')
+plotm(lla_1_4(:,1), lla_1_4(:,2), 'red')
+plotm(lla_1_5(:,1), lla_1_5(:,2), 'red')
+plotm(lla_1_6(:,1), lla_1_6(:,2), 'red')
+plotm(lla_1_7(:,1), lla_1_7(:,2), 'red')
+plotm(lla_1_8(:,1), lla_1_8(:,2), 'red')
+plotm(lla_1_9(:,1), lla_1_9(:,2), 'red')
+plotm(lla_1_10(:,1), lla_1_10(:,2), 'red')
+plotm(lla_1_11(:,1), lla_1_11(:,2), 'red')
+plotm(lla_1_12(:,1), lla_1_12(:,2), 'red')
+plotm(lla_1_13(:,1), lla_1_13(:,2), 'red')
+plotm(lla_1_14(:,1), lla_1_14(:,2), 'red')
+plotm(lla_1_15(:,1), lla_1_15(:,2), 'red')
+plotm(lla_1_16(:,1), lla_1_16(:,2), 'red')
+plotm(lla_1_17(:,1), lla_1_17(:,2), 'red')
+plotm(lla_1_18(:,1), lla_1_18(:,2), 'red')
+plotm(lla_1_19(:,1), lla_1_19(:,2), 'red')
+plotm(lla_1_20(:,1), lla_1_20(:,2), 'red')
+plotm(lla_1_21(:,1), lla_1_21(:,2), 'red')
+plotm(lla_1_22(:,1), lla_1_22(:,2), 'red')
+plotm(lla_1_23(:,1), lla_1_23(:,2), 'red')
+plotm(lla_1_24(:,1), lla_1_24(:,2), 'red')
+
+% Secondary Plane - 12
+plotm(lla_2_1(:,1), lla_2_1(:,2), 'blue')
+plotm(lla_2_2(:,1), lla_2_2(:,2), 'blue')
+plotm(lla_2_3(:,1), lla_2_3(:,2), 'blue')
+plotm(lla_2_4(:,1), lla_2_4(:,2), 'blue')
+plotm(lla_2_5(:,1), lla_2_5(:,2), 'blue')
+plotm(lla_2_6(:,1), lla_2_6(:,2), 'blue')
+plotm(lla_2_7(:,1), lla_2_7(:,2), 'blue')
+plotm(lla_2_8(:,1), lla_2_8(:,2), 'blue')
+plotm(lla_2_9(:,1), lla_2_9(:,2), 'blue')
+plotm(lla_2_10(:,1), lla_2_10(:,2), 'blue')
+plotm(lla_2_11(:,1), lla_2_11(:,2), 'blue')
+plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
+
