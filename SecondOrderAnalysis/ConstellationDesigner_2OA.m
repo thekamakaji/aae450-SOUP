@@ -1,6 +1,6 @@
 % 2nd Order Analysis - Constellation Designer
 % Author: V. Swaminathan
-% Version: 10/14/2021 1246 EST
+% Version: 11/15/2021 1201 EST
 % Purpose: To help develop Team SoUP's satellite constellation to meet
 %          requirements of AAE450 Project (2nd order analysis)
 % 
@@ -134,6 +134,7 @@ fprintf("-----------------------------------------------------------------\n");
 fprintf("Number of Orbits by Each Sat. within Propogation Time: %.0f\n", j_n);
 fprintf("Largest Gap in Longitude of Passes: %.3f degrees\n", max(diff(C_allPassesUnique)));
 fprintf("Largest Gap in Longitude of Passes: %.3f km\n", (max(diff(C_allPassesUnique))/360)*(2*pi*R_geo*cosd(Lat)));
+fprintf("-----------------------------------------------------------------\n");
 
 %% Calculation - Determination of Visible Longitudes
 
@@ -149,11 +150,11 @@ HGRA = halfGRA(Rx_rs, S_phi, R_geo); % Half Ground Range Angle [deg.]
 GRA = 2*HGRA; % Ground Range Angle [deg.]
 SDA = surfDA(HGRA, Lat); % Surface Dihedral Angle (longitude coverage of sensor) [deg.]
 
-% Print out Longitude Coverage Range of Sensor
-fprintf("-----------------------------------------------------------------\n");
-fprintf("Coverage Range of Sensor in Surface Longitude: %.3f degrees\n", SDA);
-fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", (SDA/360)*(2*pi*R_geo*cosd(Lat)));
-fprintf("-----------------------------------------------------------------\n");
+% % Print out Longitude Coverage Range of Sensor --> commented out, not working
+% fprintf("-----------------------------------------------------------------\n");
+% fprintf("Coverage Range of Sensor in Surface Longitude: %.3f degrees\n", SDA);
+% fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", (SDA/360)*(2*pi*R_geo*cosd(Lat)));
+% fprintf("-----------------------------------------------------------------\n");
 
 % Longitude Coverage Range - Discretization of Coverage
 % !!! IMPLEMENTATION NEEDED !!!
