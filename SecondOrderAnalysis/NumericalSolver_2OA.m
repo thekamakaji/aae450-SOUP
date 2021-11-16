@@ -18,6 +18,8 @@ close all;
 
 fprintf("Done!\n")
 
+tic; % Start Run Timer
+
 %% Constant Parameters
 R_A = 6378.137; % Earth Equatorial Radius [km]
 R_B = 6356.752; % Earth Polar Radius [km]
@@ -28,7 +30,7 @@ SolarDay_E = 86400; % Solar Day Length [s]
 W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Satellite Scenario Definition
-p_days = 0.5; % Days of simulation propogation
+p_days = 1; % Days of simulation propogation
 viewOpt_3D = 0; % 1 = show 3D viewer, 0 = 2D only
 
 startTime = datetime(2020,5,11,12,35,38); % Start Epoch
@@ -361,6 +363,9 @@ load coastlines
 [latcells, loncells] = polysplit(coastlat, coastlon);
 plotm(coastlat, coastlon, 'black')
 hold on
+geoshow('landareas.shp', 'FaceColor', [0.15 0.5 0.15])
+geoshow('worldlakes.shp', 'FaceColor', 'cyan')
+geoshow('worldrivers.shp', 'Color', 'blue')
 title("Worldwide Coverage")
 
 % Main Plane - 24
@@ -625,3 +630,4 @@ plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
 
 fprintf("Done!\n")
 
+toc % Display total runtime of NumericalSolver_2OA
