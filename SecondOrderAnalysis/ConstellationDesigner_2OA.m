@@ -24,14 +24,14 @@ W_E = -360/(3600*24); % Rate of Earth Rotation [deg./s]
 
 %% Surface Target/Propogation Definitions
 
-Lat = 30; % Target Latitude(s) for Observation [deg.] (|Lat| <= Rx_i)
+Lat = 70; % Target Latitude(s) for Observation [deg.] (|Lat| <= Rx_i)
 startLong = 0; % Starting Longitude of Reciever in Ref. Plane [deg.]
 timeTotal = 15*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days (24 hrs.)
 
 %% Satellite/Constellation Definitions
 
 % Define Walker Constellation Parameters to Test
-C_totalSats = 12; % Total Number of Rx satellites in Constellation
+C_totalSats = 24; % Total Number of Rx satellites in Constellation
 C_planes = 1; % Number of Equally spaced orbital planes
 C_spacing = 0; % Spacing b/w satellites in adjacent planes (true anomaly "slots")
 
@@ -124,7 +124,7 @@ end
 
 % Normalize Passes to 360 deg. Earth
 C_allPasses = wrapTo180(C_allPasses);
-C_allPasses = unique(C_allPasses);
+C_allPassesUnique = unique(C_allPasses);
 
 % Geodetic Radius for Circumference @ Target Lat.
 R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
@@ -148,8 +148,7 @@ SDA = surfDA(HGRA, Lat); % Surface Dihedral Angle (longitude coverage of sensor)
 % Print out Longitude Coverage Range of Sensor
 fprintf("-----------------------------------------------------------------\n");
 fprintf("Coverage Range of Sensor in Surface Longitude: %.3f degrees\n", SDA);
-fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", ...
-    (SDA/360)*(2*pi*R_geo*cosd(Lat)));
+fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", (SDA/360)*(2*pi*R_geo*cosd(Lat)));
 fprintf("-----------------------------------------------------------------\n");
 
 % Longitude Coverage Range - Discretization of Coverage
