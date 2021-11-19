@@ -1,13 +1,13 @@
-% Propulsion Sizing Code
+% Second Order Analysis - Propulsion Sizing
 % Author: V. Swaminathan
 % Version: 11/18/2021 1805 EST
 % Purpose: To help select Team SoUP's satellite propulsion system and ideal
 %          propellant mass
 % 
 % To Be Provided By Code:
-% - Propellant cost of any given orbital changes (% of mass)
-% - Total Expected DeltaV requirement
-%
+% - Propellant cost of any chosen orbital changes
+% - Total Expected DeltaV requirement for Mission Duration
+% - Plots of Specific Impulse 
 
 %% Initialize Workspace
 

@@ -5,8 +5,8 @@
 %          requirements of AAE450 Project (2nd order analysis)
 % 
 % To Be Provided By Code:
-% - Location/Time Histories of Tx/Rx satellites
-% - Relative position to Tx sats from Rx sats
+% - Location/Time Histories of Rx satellites
+% - Ground Station Contact Times of Rx satellites 
 % - "Coverage" requirement verification (soft, mainly for SWE)
 
 %% Initialize Workspace
@@ -30,8 +30,9 @@ SolarDay_E = 86400; % Solar Day Length [s]
 W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Satellite Scenario Definition
-p_days = 0.5; % Days of simulation propogation
+p_days = 0.2; % Days of simulation propogation
 viewOpt_3D = 1; % 1 = show 3D viewer, 0 = 2D only
+ground_network = "SSC"; % Select Ground Station Provider, "none" = skip
 
 startTime = datetime(2020,5,11,12,35,38); % Start Epoch
 stopTime = startTime + days(p_days); % End Epoch
@@ -65,6 +66,39 @@ fprintf("Done!\n")
 
 % SWARM
 
+%% Ground Station Networks
+
+% No Network Selected --> Run w/o Ground Station Analysis
+if ground_network == "none"
+    fprintf("GROUND STATIONS DISABLED - ENABLE IN SCENARIO DEFINITION SECTION\n")
+end
+
+% Near Earth Network (NEN)
+
+% Swedish Space Corporation (SSC)
+if ground_network == "SSC"
+
+    fprintf("Defining Ground Station Network...")
+
+    GS_SSC(1) = groundStation(sc_main, 19.0166, -155.6667, "Name", "SSC - South Point Satellite Station", "MinElevationAngle", 10);
+    GS_SSC(2) = groundStation(sc_main, 26.7333, -81.00333, "Name", "SSC - Clewiston Satellite Station", "MinElevationAngle", 10);
+    GS_SSC(3) = groundStation(sc_main, 64.8000, -147.6500, "Name", "SSC - North Pole Satellite Station", "MinElevationAngle", 10);
+    GS_SSC(4) = groundStation(sc_main, 68.4000, -133.5000, "Name", "SSC - Inuvik Satellite Station", "MinElevationAngle", 10);
+    GS_SSC(5) = groundStation(sc_main, -33.0133, -70.6666, "Name", "SSC - Santiago Satellite Station", "MinElevationAngle", 10);
+    GS_SSC(6) = groundStation(sc_main, -52.9333, -70.8500, "Name", "SSC - Punta Arenas Satellite Station", "MinElevationAngle", 10);
+    GS_SSC(7) = groundStation(sc_main, 67.8833, 21.00666, "Name", "SSC - Esrange Space Center", "MinElevationAngle", 10);
+    GS_SSC(8) = groundStation(sc_main, 59.2000, 18.00833, "Name", "SSC - Stockholm Teleport", "MinElevationAngle", 10);
+    GS_SSC(9) = groundStation(sc_main, 13.1000, 100.9167, "Name", "SSC - Siracha Satellite Station", "MinElevationAngle", 10);
+    GS_SSC(10) = groundStation(sc_main, -29.0083, 135.5833, "Name", "SSC - WASC", "MinElevationAngle", 10);
+   
+    fprintf("Done!\n")
+
+end
+
+% Amazon Web Services (AWS)
+
+% Kongsberg Satellite Services (KSAT)
+
 
 %% Rx Constellation Definitions
 
@@ -85,30 +119,10 @@ Rx_TA = linspace(0,360,numsats_main); % True Anomaly Values [deg.]
 
 fprintf("Defining Constellation - Main Plane (24)...")
 
-Rx_1_1 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(1), "OrbitPropagator","sgp4");
-Rx_1_2 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(2), "OrbitPropagator","sgp4");
-Rx_1_3 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(3), "OrbitPropagator","sgp4");
-Rx_1_4 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(4), "OrbitPropagator","sgp4");
-Rx_1_5 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(5), "OrbitPropagator","sgp4");
-Rx_1_6 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(6), "OrbitPropagator","sgp4");
-Rx_1_7 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(7), "OrbitPropagator","sgp4");
-Rx_1_8 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(8), "OrbitPropagator","sgp4");
-Rx_1_9 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(9), "OrbitPropagator","sgp4");
-Rx_1_10 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(10), "OrbitPropagator","sgp4");
-Rx_1_11 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(11), "OrbitPropagator","sgp4");
-Rx_1_12 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(12), "OrbitPropagator","sgp4");
-Rx_1_13 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(13), "OrbitPropagator","sgp4");
-Rx_1_14 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(14), "OrbitPropagator","sgp4");
-Rx_1_15 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(15), "OrbitPropagator","sgp4");
-Rx_1_16 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(16), "OrbitPropagator","sgp4");
-Rx_1_17 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(17), "OrbitPropagator","sgp4");
-Rx_1_18 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(18), "OrbitPropagator","sgp4");
-Rx_1_19 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(19), "OrbitPropagator","sgp4");
-Rx_1_20 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(20), "OrbitPropagator","sgp4");
-Rx_1_21 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(21), "OrbitPropagator","sgp4");
-Rx_1_22 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(22), "OrbitPropagator","sgp4");
-Rx_1_23 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(23), "OrbitPropagator","sgp4");
-Rx_1_24 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(24), "OrbitPropagator","sgp4");
+for n = 1:1:24
+    name_temp = "SoUP-1-" + n;
+    Rx_1(n) = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(n), "OrbitPropagator","sgp4", "Name", name_temp);
+end
 
 fprintf("Done!\n")
 
@@ -125,20 +139,55 @@ Rx_TA = linspace(0,360,numsats_second); % True Anomaly Values [deg.]
 
 fprintf("Defining Constellation - Secondary Plane (12)...")
 
-Rx_2_1 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(1), "OrbitPropagator","sgp4");
-Rx_2_2 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(2), "OrbitPropagator","sgp4");
-Rx_2_3 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(3), "OrbitPropagator","sgp4");
-Rx_2_4 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(4), "OrbitPropagator","sgp4");
-Rx_2_5 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(5), "OrbitPropagator","sgp4");
-Rx_2_6 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(6), "OrbitPropagator","sgp4");
-Rx_2_7 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(7), "OrbitPropagator","sgp4");
-Rx_2_8 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(8), "OrbitPropagator","sgp4");
-Rx_2_9 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(9), "OrbitPropagator","sgp4");
-Rx_2_10 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(10), "OrbitPropagator","sgp4");
-Rx_2_11 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(11), "OrbitPropagator","sgp4");
-Rx_2_12 = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(12), "OrbitPropagator","sgp4");
+for n = 1:1:12
+    name_temp = "SoUP-2-" + n;
+    Rx_2(n) = satellite(sc_main,Rx_a,Rx_e,Rx_i,Rx_RAAN,Rx_w,Rx_TA(n), "OrbitPropagator","sgp4", "Name", name_temp);
+end
 
 fprintf("Done!\n")
+
+%% Ground Station Contact History
+
+if ground_network == "SSC"
+
+    fprintf("Calculating Ground Station Contacts w/ SSC - Main Plane (24)...")
+    
+    % Main Plane Access - SSC
+    for m = 1:1:length(GS_SSC)
+        for n = 1:1:24
+            AC_1(n, m) = access(Rx_1(n), GS_SSC(m));
+        end
+    end
+    
+    fprintf("Done!\n")
+    fprintf("Calculating Ground Station Contacts w/ SSC - Second Plane (12)...")
+    
+    % Secondary Plane Access - SSC
+    for m = 1:1:length(GS_SSC)
+        for n = 1:1:12
+            AC_2(n, m) = access(Rx_2(n), GS_SSC(m));
+        end
+    end
+    
+    fprintf("Done!\n")
+    fprintf("Calculating Total Time in Contact for Each Satellite...")
+    
+    CT_1_temp = zeros(24);
+    CT_2_temp = zeros(12);
+    for m = 1:1:length(GS_SSC)
+        for n = 1:1:24
+            CT_1_temp(n) = CT_1_temp(n) + sum(accessIntervals(AC_1(n,m)).Duration(:));
+        end
+        for n = 1:1:12
+            CT_2_temp(n) = CT_2_temp(n) + sum(accessIntervals(AC_2(n,m)).Duration(:));
+        end
+    end
+    CT_1 = CT_1_temp(:,1)';
+    CT_2 = CT_2_temp(:,1)';
+    
+    fprintf("Done!\n")
+
+end
 
 %% Orbital Simulation/Ground Tracks in 3D
 
@@ -147,95 +196,23 @@ if viewOpt_3D == 1
     fprintf("Preparing 3D Viewer...")
 
     % Viewer Options - Colors (Change Secondary Plane)
-    Rx_2_1.MarkerColor = [0 1 0];
-    Rx_2_1.Orbit.LineColor = [0 1 0];
-    Rx_2_1.LabelFontColor = [0 1 0];
-    
-    Rx_2_2.MarkerColor = [0 1 0];
-    Rx_2_2.Orbit.LineColor = [0 1 0];
-    Rx_2_2.LabelFontColor = [0 1 0];
-    
-    Rx_2_3.MarkerColor = [0 1 0];
-    Rx_2_3.Orbit.LineColor = [0 1 0];
-    Rx_2_3.LabelFontColor = [0 1 0];
-    
-    Rx_2_4.MarkerColor = [0 1 0];
-    Rx_2_4.Orbit.LineColor = [0 1 0];
-    Rx_2_4.LabelFontColor = [0 1 0];
-    
-    Rx_2_5.MarkerColor = [0 1 0];
-    Rx_2_5.Orbit.LineColor = [0 1 0];
-    Rx_2_5.LabelFontColor = [0 1 0];
-    
-    Rx_2_6.MarkerColor = [0 1 0];
-    Rx_2_6.Orbit.LineColor = [0 1 0];
-    Rx_2_6.LabelFontColor = [0 1 0];
-    
-    Rx_2_7.MarkerColor = [0 1 0];
-    Rx_2_7.Orbit.LineColor = [0 1 0];
-    Rx_2_7.LabelFontColor = [0 1 0];
-    
-    Rx_2_8.MarkerColor = [0 1 0];
-    Rx_2_8.Orbit.LineColor = [0 1 0];
-    Rx_2_8.LabelFontColor = [0 1 0];
-    
-    Rx_2_9.MarkerColor = [0 1 0];
-    Rx_2_9.Orbit.LineColor = [0 1 0];
-    Rx_2_9.LabelFontColor = [0 1 0];
-    
-    Rx_2_10.MarkerColor = [0 1 0];
-    Rx_2_10.Orbit.LineColor = [0 1 0];
-    Rx_2_10.LabelFontColor = [0 1 0];
-    
-    Rx_2_11.MarkerColor = [0 1 0];
-    Rx_2_11.Orbit.LineColor = [0 1 0];
-    Rx_2_11.LabelFontColor = [0 1 0];
-    
-    Rx_2_12.MarkerColor = [0 1 0];
-    Rx_2_12.Orbit.LineColor = [0 1 0];
-    Rx_2_12.LabelFontColor = [0 1 0];
+    for n = 1:1:12
+        Rx_2(n).MarkerColor = [0 1 0];
+        Rx_2(n).Orbit.LineColor = [0 1 0];
+        Rx_2(n).LabelFontColor = [0 1 0];
+    end
     
     % Initialize Orbital Scenario Viewer
     View_Orb = satelliteScenarioViewer(sc_main);
     
     % Initialize Ground Tracks
-    groundTrack(Rx_1_1, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_2, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_3, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_4, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_5, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_6, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_7, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_8, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_9, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_10, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_11, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_12, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_13, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_14, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_15, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_16, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_17, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_18, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_19, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_20, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_21, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_22, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_23, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_1_24, "LeadTime", p_days*24*60*60);
-    
-    groundTrack(Rx_2_1, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_2_2, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_2_3, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_2_4, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_2_5, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_2_6, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_2_7, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_2_8, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_2_9, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_2_10, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_2_11, "LeadTime", p_days*24*60*60);
-    groundTrack(Rx_2_12, "LeadTime", p_days*24*60*60);
+    for n = 1:1:24
+        groundTrack(Rx_1(n), "LeadTime", p_days*24*3600);
+    end
+
+    for n = 1:1:12
+        groundTrack(Rx_2(n), "LeadTime", p_days*24*3600);
+    end
     
     fprintf("Done!\n")
 
@@ -246,60 +223,61 @@ else
     fprintf("3D VIEWER DISABLED - ENABLE IN SCENARIO DEFINITION SECTION\n")
 end
 
-%% Data Processing/Export
+%% Position/Time/Velocity Data Processing
 
 fprintf("Processing Data from Orbit Propagation...")
 
 % Tx Location/Time History
 
 % Rx Location/Time History - MAIN PLANE
-[pos_Rx_1_1, vel_Rx_1_1, time_vec] = states(Rx_1_1);
-[pos_Rx_1_2, vel_Rx_1_2] = states(Rx_1_2);
-[pos_Rx_1_3, vel_Rx_1_3] = states(Rx_1_3);
-[pos_Rx_1_4, vel_Rx_1_4] = states(Rx_1_4);
-[pos_Rx_1_5, vel_Rx_1_5] = states(Rx_1_5);
-[pos_Rx_1_6, vel_Rx_1_6] = states(Rx_1_6);
-[pos_Rx_1_7, vel_Rx_1_7] = states(Rx_1_7);
-[pos_Rx_1_8, vel_Rx_1_8] = states(Rx_1_8);
-[pos_Rx_1_9, vel_Rx_1_9] = states(Rx_1_9);
-[pos_Rx_1_10, vel_Rx_1_10] = states(Rx_1_10);
-[pos_Rx_1_11, vel_Rx_1_11] = states(Rx_1_11);
-[pos_Rx_1_12, vel_Rx_1_12] = states(Rx_1_12);
-[pos_Rx_1_13, vel_Rx_1_13] = states(Rx_1_13);
-[pos_Rx_1_14, vel_Rx_1_14] = states(Rx_1_14);
-[pos_Rx_1_15, vel_Rx_1_15] = states(Rx_1_15);
-[pos_Rx_1_16, vel_Rx_1_16] = states(Rx_1_16);
-[pos_Rx_1_17, vel_Rx_1_17] = states(Rx_1_17);
-[pos_Rx_1_18, vel_Rx_1_18] = states(Rx_1_18);
-[pos_Rx_1_19, vel_Rx_1_19] = states(Rx_1_19);
-[pos_Rx_1_20, vel_Rx_1_20] = states(Rx_1_20);
-[pos_Rx_1_21, vel_Rx_1_21] = states(Rx_1_21);
-[pos_Rx_1_22, vel_Rx_1_22] = states(Rx_1_22);
-[pos_Rx_1_23, vel_Rx_1_23] = states(Rx_1_23);
-[pos_Rx_1_24, vel_Rx_1_24] = states(Rx_1_24);
+[pos_Rx_1_1, vel_Rx_1_1, time_vec] = states(Rx_1(1));
+[pos_Rx_1_2, vel_Rx_1_2] = states(Rx_1(2));
+[pos_Rx_1_3, vel_Rx_1_3] = states(Rx_1(3));
+[pos_Rx_1_4, vel_Rx_1_4] = states(Rx_1(4));
+[pos_Rx_1_5, vel_Rx_1_5] = states(Rx_1(5));
+[pos_Rx_1_6, vel_Rx_1_6] = states(Rx_1(6));
+[pos_Rx_1_7, vel_Rx_1_7] = states(Rx_1(7));
+[pos_Rx_1_8, vel_Rx_1_8] = states(Rx_1(8));
+[pos_Rx_1_9, vel_Rx_1_9] = states(Rx_1(9));
+[pos_Rx_1_10, vel_Rx_1_10] = states(Rx_1(10));
+[pos_Rx_1_11, vel_Rx_1_11] = states(Rx_1(11));
+[pos_Rx_1_12, vel_Rx_1_12] = states(Rx_1(12));
+[pos_Rx_1_13, vel_Rx_1_13] = states(Rx_1(13));
+[pos_Rx_1_14, vel_Rx_1_14] = states(Rx_1(14));
+[pos_Rx_1_15, vel_Rx_1_15] = states(Rx_1(15));
+[pos_Rx_1_16, vel_Rx_1_16] = states(Rx_1(16));
+[pos_Rx_1_17, vel_Rx_1_17] = states(Rx_1(17));
+[pos_Rx_1_18, vel_Rx_1_18] = states(Rx_1(18));
+[pos_Rx_1_19, vel_Rx_1_19] = states(Rx_1(19));
+[pos_Rx_1_20, vel_Rx_1_20] = states(Rx_1(20));
+[pos_Rx_1_21, vel_Rx_1_21] = states(Rx_1(21));
+[pos_Rx_1_22, vel_Rx_1_22] = states(Rx_1(22));
+[pos_Rx_1_23, vel_Rx_1_23] = states(Rx_1(23));
+[pos_Rx_1_24, vel_Rx_1_24] = states(Rx_1(24));
+
 
 % Rx Location/Time History - SECONDARY PLANE
-[pos_Rx_2_1, vel_Rx_2_1, time] = states(Rx_2_1);
-[pos_Rx_2_2, vel_Rx_2_2] = states(Rx_2_2);
-[pos_Rx_2_3, vel_Rx_2_3] = states(Rx_2_3);
-[pos_Rx_2_4, vel_Rx_2_4] = states(Rx_2_4);
-[pos_Rx_2_5, vel_Rx_2_5] = states(Rx_2_5);
-[pos_Rx_2_6, vel_Rx_2_6] = states(Rx_2_6);
-[pos_Rx_2_7, vel_Rx_2_7] = states(Rx_2_7);
-[pos_Rx_2_8, vel_Rx_2_8] = states(Rx_2_8);
-[pos_Rx_2_9, vel_Rx_2_9] = states(Rx_2_9);
-[pos_Rx_2_10, vel_Rx_2_10] = states(Rx_2_10);
-[pos_Rx_2_11, vel_Rx_2_11] = states(Rx_2_11);
-[pos_Rx_2_12, vel_Rx_2_12] = states(Rx_2_12);
+[pos_Rx_2_1, vel_Rx_2_1] = states(Rx_2(1));
+[pos_Rx_2_2, vel_Rx_2_2] = states(Rx_2(2));
+[pos_Rx_2_3, vel_Rx_2_3] = states(Rx_2(3));
+[pos_Rx_2_4, vel_Rx_2_4] = states(Rx_2(4));
+[pos_Rx_2_5, vel_Rx_2_5] = states(Rx_2(5));
+[pos_Rx_2_6, vel_Rx_2_6] = states(Rx_2(6));
+[pos_Rx_2_7, vel_Rx_2_7] = states(Rx_2(7));
+[pos_Rx_2_8, vel_Rx_2_8] = states(Rx_2(8));
+[pos_Rx_2_9, vel_Rx_2_9] = states(Rx_2(9));
+[pos_Rx_2_10, vel_Rx_2_10] = states(Rx_2(10));
+[pos_Rx_2_11, vel_Rx_2_11] = states(Rx_2(11));
+[pos_Rx_2_12, vel_Rx_2_12] = states(Rx_2(12));
 
 % Tx/Rx Relative Position History
 
 fprintf("Done!\n")
 
-%% Converting to LLA --> Need help speeding up?
+%% Converting to LLA
 
-fprintf("Converting position data from ECI to LLA Format...\n")
 poolobj = parpool(4); % Parallel Pool w/ 4 Threads
+fprintf("Converting position data from ECI to LLA Format...\n")
 
 fprintf('Progress Bar: %.0f Iterations needed\n', length(pos_Rx_1_1));
 fprintf([repmat('.',1,length(pos_Rx_1_1)) '\n\n']);
