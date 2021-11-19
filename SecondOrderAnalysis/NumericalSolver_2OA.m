@@ -30,9 +30,21 @@ SolarDay_E = 86400; % Solar Day Length [s]
 W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Satellite Scenario Definition
+
 p_days = 0.2; % Days of simulation propogation
-viewOpt_3D = 1; % 1 = show 3D viewer, 0 = 2D only
-ground_network = "SSC"; % Select Ground Station Provider, "none" = skip
+
+% Options:
+% - on --> Show 3D simulation
+% - off --> Skip 3D viewer
+viewOpt_3D = "off"; % Select 3D Viewer option
+
+% Available Providers:
+% - none --> Skip Ground Station Analysis Entirely
+% - SSC --> Swedish Space Corporation
+% - NEN --> Near Earth Network (NASA) --> NOT IMPLEMENTED YET
+% - AWS --> Amazon Web Services --> NOT IMPLEMENTED YET
+% - KSAT --> Kongsberg Satellite Services --> NOT IMPLEMENTED YET
+ground_network = "none"; % Select Ground Station Provider
 
 startTime = datetime(2020,5,11,12,35,38); % Start Epoch
 stopTime = startTime + days(p_days); % End Epoch
@@ -191,7 +203,7 @@ end
 
 %% Orbital Simulation/Ground Tracks in 3D
 
-if viewOpt_3D == 1
+if viewOpt_3D == "on"
     
     fprintf("Preparing 3D Viewer...")
 
@@ -502,7 +514,7 @@ fprintf("Done!\n")
 
 fprintf("Plotting 100x100km @ Equator Coverage...")
 figure(5)
-h_3 = worldmap([-.45 0.45], [-.45 0.45]);
+h_3 = worldmap("World");
 getm(h_3,"MapProjection");
 geoshow('landareas.shp', 'FaceColor', [0.15 0.5 0.15])
 geoshow('worldlakes.shp', 'FaceColor', 'cyan')
@@ -551,13 +563,16 @@ plotm(lla_2_10(:,1), lla_2_10(:,2), 'blue')
 plotm(lla_2_11(:,1), lla_2_11(:,2), 'blue')
 plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
 
+zoom on
+zoom(20)
+
 fprintf("Done!\n")
 
 %% Coverage of 100km x 100km grid at Latitude = 70 deg.
 
 fprintf("Plotting 100x100km @ Lat. = 70 deg. Coverage...")
 figure(6)
-h_4 = worldmap([69.55 70.45], [-.45 0.45]);
+h_4 = worldmap("World");
 getm(h_4,"MapProjection");
 geoshow('landareas.shp', 'FaceColor', [0.15 0.5 0.15])
 geoshow('worldlakes.shp', 'FaceColor', 'cyan')
@@ -605,6 +620,9 @@ plotm(lla_2_9(:,1), lla_2_9(:,2), 'blue')
 plotm(lla_2_10(:,1), lla_2_10(:,2), 'blue')
 plotm(lla_2_11(:,1), lla_2_11(:,2), 'blue')
 plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
+
+zoom on
+zoom(20)
 
 fprintf("Done!\n")
 
