@@ -32,7 +32,7 @@ m_i = 40; % Satellite Inert Mass [kg]
 mission_time = 5; % [years]
 
 % Deorbit Altitude --> bring satellite into high air drag zone
-r_d = 200 + R_A; % [km]
+r_d = 200 + R_A; % 200 km altitude selected --> high enough air drag
 
 %% Main Plane Delivery Calculations
 
@@ -189,8 +189,12 @@ fprintf("-----------------------------------------------------------------------
 
 %% Maneuver Calculation Functions
 
-% Altitude dV Changes - Work!
+% Altitude dV Changes
 
+% Change Apogee
+% r_1 = starting circular orbit radius [km]
+% r_2 = final apogee radius [km]
+% MU = Gravitational Parameter for Body being Orbited [km^3/s^2]
 function dV = changeApogee(r_1, r_2, MU)
 
     a_minus = r_1;
@@ -203,6 +207,10 @@ function dV = changeApogee(r_1, r_2, MU)
 
 end
 
+% Circularize
+% r_1 = starting perigee orbit radius [km]
+% r_2 = final circular orbit radius [km]
+% MU = Gravitational Parameter for Body being Orbited [km^3/s^2]
 function dV = circularize(r_1, r_2, MU)
 
     a_minus = (r_1 + r_2) / 2;
@@ -215,6 +223,10 @@ function dV = circularize(r_1, r_2, MU)
 
 end
 
+% Change Perigee
+% r_1 = starting circular orbit radius [km]
+% r_2 = final perigee radius [km]
+% MU = Gravitational Parameter for Body being Orbited [km^3/s^2]
 function dV = changePerigee(r_1, r_2, MU)
 
     a_minus = r_1;
@@ -227,24 +239,29 @@ function dV = changePerigee(r_1, r_2, MU)
 
 end
 
-% Inclination dV Change - Works!
-
+% Change Inclination
+% delta_i = change in inclination [deg.]
+% v_current = current circular orbit velocity [km]
 function dV = changeInclination(delta_i, v_current)
 
     dV = 2 * v_current * sind(delta_i / 2);
 
 end
 
-% Propellant Mass Expended - Works!
-
+% Propellant Mass Expended
+% deltaV = total deltaV needed for mission [km/s]
+% I_sp = specific impulse of s/c thruster [s]
+% m_i = inert mass of s/c [kg]
+% g = gravitational acceleration of body [m/s^2]
 function m_p = propExpended(deltaV, I_sp, m_i, g)
 
     m_p = (1 - exp((-deltaV*1000)/(g*I_sp))) * m_i;
 
 end
 
-% Circular Velocity Calculator
-
+% Circular Orbital Velocity
+% r = orbital radius [km]
+% MU = Gravitational Parameter for Body being Orbited [km^3/s^2]
 function v_c = velocityCircular(r, MU)
 
     v_c = sqrt(MU / r);
