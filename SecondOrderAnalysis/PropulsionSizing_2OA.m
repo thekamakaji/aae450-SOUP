@@ -27,9 +27,13 @@ g = 9.81; % Gravitational Acceleration Constant on Earth [m/s^2]
 %% Common Factors/Inputs
 
 m_i = 40; % Satellite Inert Mass [kg]
+I_sp = 60:1:350; % Range of specific impulses [s]
 
 % Planned Mission Duration / Satellite Lifetime
 mission_time = 5; % [years]
+
+% Initial Delivery Altitude
+h_delivery = 400; % [km]
 
 % Deorbit Altitude --> bring satellite into high air drag zone
 r_d = 200 + R_A; % 200 km altitude selected --> high enough air drag
@@ -45,7 +49,7 @@ Rx_w = 0; % Argument of Perigee [deg.]
 Rx_p = Rx_a*(1 - Rx_e^2); % Semilatus Rectum p [km]
 
 % Initial Delivery Orbit from Launch Vehicle
-r_1 = 400 + R_A; % All sats delivered to 400 km altitude orbit
+r_1 = h_delivery + R_A; % All sats delivered to 400 km altitude orbit
 
 % Hohmann Transfer to Correct Altitude - Timed to space by True Anomaly
 dV_1_1 = changeApogee(r_1, Rx_a, MU); % [km/s]
@@ -58,7 +62,6 @@ dV_1_s = 0.02; % [km/s]
 dV_1_d = changePerigee(Rx_a, r_d, MU);
 
 % Total dV/Propellant Expenditure
-I_sp = 60:10:350; % Range of specific impulses [s]
 dV_1_total = dV_1_1 + dV_1_2 + dV_1_d + mission_time*dV_1_s;
 
 for n = 1:1:length(I_sp)
@@ -84,7 +87,7 @@ Rx_w = 0; % Argument of Perigee [deg.]
 Rx_p = Rx_a*(1 - Rx_e^2); % Semilatus Rectum p [km]
 
 % Initial Delivery Orbit from Launch Vehicle
-r_1 = 400 + R_A; % All sats delivered to 400 km altitude orbit
+r_1 = h_delivery + R_A; % All sats delivered to 400 km altitude orbit
 i_1 = makeSSO(415 + R_A); % All sats delivered into main plane at start
 
 % Hohmann Transfer to Correct Altitude - Timed to space by True Anomaly
@@ -126,7 +129,7 @@ Rx_RAAN = 0; % Right Ascension of AN [deg.]
 Rx_w = 0; % Argument of Perigee [deg.]
 Rx_p = Rx_a*(1 - Rx_e^2); % Semilatus Rectum p [km]
 
-% Initial Delivery Orbit from Launch Vehicle
+% Initial Delivery Orbit from Second Launch Vehicle
 r_1 = 500 + R_A; % Secondary plane sats delivered to 500 km orbit
 
 % Hohmann Transfer to Correct Altitude - Timed to space by True Anomaly
@@ -188,8 +191,6 @@ fprintf("\nTotal dV: %0.3f [m/s]\n\n", dV_3_total*1000)
 fprintf("------------------------------------------------------------------------\n")
 
 %% Maneuver Calculation Functions
-
-% Altitude dV Changes
 
 % Change Apogee
 % r_1 = starting circular orbit radius [km]
