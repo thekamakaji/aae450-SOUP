@@ -1,6 +1,6 @@
 % 2nd Order Analysis - Numerical Solution
 % Author: V. Swaminathan
-% Version: 11/15/2021 1912 EST
+% Version: 11/19/2021 1413 EST
 % Purpose: To help verify that Team SoUP's satellite constellation meets
 %          requirements of AAE450 Project (2nd order analysis)
 % 
@@ -31,7 +31,7 @@ W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Satellite Scenario Definition
 
-p_days = 0.2; % Days of simulation propogation
+p_days = 15; % Days of simulation propogation
 
 % Options:
 % - on --> Show 3D simulation
@@ -215,7 +215,7 @@ if viewOpt_3D == "on"
     end
     
     % Initialize Orbital Scenario Viewer
-    View_Orb = satelliteScenarioViewer(sc_main);
+    View_Orb = satelliteScenarioViewer(sc_main, "CameraReferenceFrame","Inertial");
     
     % Initialize Ground Tracks
     for n = 1:1:24
@@ -514,14 +514,14 @@ fprintf("Done!\n")
 
 fprintf("Plotting 100x100km @ Equator Coverage...")
 figure(5)
-h_3 = worldmap("World");
+h_3 = worldmap("Ecuador");
 getm(h_3,"MapProjection");
 geoshow('landareas.shp', 'FaceColor', [0.15 0.5 0.15])
 geoshow('worldlakes.shp', 'FaceColor', 'cyan')
 geoshow('worldrivers.shp', 'Color', 'blue')
 geoshow('worldcities.shp', 'Marker', '.',...
                            'MarkerEdgeColor', 'magenta')
-title("100x100 km at Equator")
+title("100x100 km near Equator")
 
 % Main Plane - 24
 plotm(lla_1_1(:,1), lla_1_1(:,2), 'red')
@@ -563,23 +563,23 @@ plotm(lla_2_10(:,1), lla_2_10(:,2), 'blue')
 plotm(lla_2_11(:,1), lla_2_11(:,2), 'blue')
 plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
 
-zoom on
-zoom(20)
+scaleruler on
+scaleruler("units", "km")
 
 fprintf("Done!\n")
 
-%% Coverage of 100km x 100km grid at Latitude = 70 deg.
+%% Coverage of 100km x 100km grid at Latitude ~ 70 deg.
 
-fprintf("Plotting 100x100km @ Lat. = 70 deg. Coverage...")
+fprintf("Plotting 100x100km @ Lat. ~ 70 deg. Coverage...")
 figure(6)
-h_4 = worldmap("World");
+h_4 = worldmap("Iceland");
 getm(h_4,"MapProjection");
 geoshow('landareas.shp', 'FaceColor', [0.15 0.5 0.15])
 geoshow('worldlakes.shp', 'FaceColor', 'cyan')
 geoshow('worldrivers.shp', 'Color', 'blue')
 geoshow('worldcities.shp', 'Marker', '.',...
                            'MarkerEdgeColor', 'magenta')
-title("100x100 km at Lat = 70 deg.")
+title("100x100 km near Lat = 70 deg.")
 
 % Main Plane - 24
 plotm(lla_1_1(:,1), lla_1_1(:,2), 'red')
@@ -621,8 +621,8 @@ plotm(lla_2_10(:,1), lla_2_10(:,2), 'blue')
 plotm(lla_2_11(:,1), lla_2_11(:,2), 'blue')
 plotm(lla_2_12(:,1), lla_2_12(:,2), 'blue')
 
-zoom on
-zoom(20)
+scaleruler on
+scaleruler("units", "km")
 
 fprintf("Done!\n")
 
