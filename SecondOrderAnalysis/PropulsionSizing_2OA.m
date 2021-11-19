@@ -24,7 +24,7 @@ SolarDay_E = 86400; % Solar Day Length [s]
 W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 g = 9.81; % Gravitational Acceleration Constant on Earth [m/s^2]
 
-%% Common Factors
+%% Common Factors/Inputs
 
 m_i = 40; % Satellite Inert Mass [kg]
 
