@@ -30,8 +30,8 @@ SolarDay_E = 86400; % Solar Day Length [s]
 W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Satellite Scenario Definition
-p_days = 1; % Days of simulation propogation
-viewOpt_3D = 0; % 1 = show 3D viewer, 0 = 2D only
+p_days = 0.5; % Days of simulation propogation
+viewOpt_3D = 1; % 1 = show 3D viewer, 0 = 2D only
 
 startTime = datetime(2020,5,11,12,35,38); % Start Epoch
 stopTime = startTime + days(p_days); % End Epoch

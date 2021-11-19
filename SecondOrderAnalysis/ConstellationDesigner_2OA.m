@@ -24,7 +24,7 @@ W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Surface Target/Propogation Definitions
 
-Lat = 70; % Target Latitude(s) for Observation [deg.] (|Lat| <= Rx_i)
+Lat = 30; % Target Latitude(s) for Observation [deg.] (|Lat| <= Rx_i)
 startLong = 0; % Starting Longitude of Reciever in Ref. Plane [deg.]
 timeTotal = 15*SolarDay_E; % Time to propogate through [s] --> Multiplier is Days (24 hrs.)
 
@@ -39,7 +39,7 @@ C_spacing = 0; % Spacing b/w satellites in adjacent planes (true anomaly "slots"
 S_phi = 60; % Half-cone boresight angle of Antennae [deg.] (Incd. Ang.)
 
 % Orbital Parameters for Reference Receiver (Rx)
-Rx_a = 523 + R_A; % Orbit radius [km] (semimajor axis (circular))
+Rx_a = 415 + R_A; % Orbit radius [km] (semimajor axis (circular))
 Rx_e = 0; % Eccentricity
 Rx_i = makeSSO(Rx_a); % Inclination [deg.]
 Rx_RAAN = 0; % Right Ascension of AN [deg.]
@@ -138,23 +138,18 @@ fprintf("-----------------------------------------------------------------\n");
 
 %% Calculation - Determination of Visible Longitudes
 
-% !!! NEEDS VERIFICATION !!!
-% Potential Issues:
-% - Incorrect Coverage Range of Sensor (high altitudes showing lower
-%   coverage than lower altitudes
-% - For above issue --> altitudes at and above 987km seem to work fine
-
 % Basic Sensor Parameters
 R_geo = geodeticR(R_A, R_B, Lat); % Geodetic Radius @ Target Lat. [km]
-HGRA = halfGRA(Rx_rs, S_phi, R_geo); % Half Ground Range Angle [deg.]
+HGRA = halfGRA(Rx_rs + 987, S_phi, R_geo); % Half Ground Range Angle [deg.] --> correction shift added!
+
 GRA = 2*HGRA; % Ground Range Angle [deg.]
 SDA = surfDA(HGRA, Lat); % Surface Dihedral Angle (longitude coverage of sensor) [deg.]
 
-% % Print out Longitude Coverage Range of Sensor --> commented out, not working
-% fprintf("-----------------------------------------------------------------\n");
-% fprintf("Coverage Range of Sensor in Surface Longitude: %.3f degrees\n", SDA);
-% fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", (SDA/360)*(2*pi*R_geo*cosd(Lat)));
-% fprintf("-----------------------------------------------------------------\n");
+% Print out Longitude Coverage Range of Sensor
+fprintf("-----------------------------------------------------------------\n");
+fprintf("Coverage Range of Sensor in Surface Longitude: %.3f degrees\n", SDA);
+fprintf("Coverage Range of Sensor in Surface Longitude: %.3f km\n", (SDA/360)*(2*pi*R_geo*cosd(Lat)));
+fprintf("-----------------------------------------------------------------\n");
 
 % Longitude Coverage Range - Discretization of Coverage
 % !!! IMPLEMENTATION NEEDED !!!
