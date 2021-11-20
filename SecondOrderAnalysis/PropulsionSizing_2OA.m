@@ -1,4 +1,4 @@
-% Second Order Analysis - Propulsion Sizing
+% 2nd Order Analysis - Propulsion Sizing
 % Author: V. Swaminathan
 % Version: 11/18/2021 1805 EST
 % Purpose: To help select Team SoUP's satellite propulsion system and ideal

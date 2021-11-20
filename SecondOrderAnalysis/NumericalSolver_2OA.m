@@ -31,24 +31,23 @@ W_E = (-0.2507)/60; % Rate of Earth Rotation [deg./s]
 
 %% Satellite Scenario Definition
 
-p_days = 15; % Days of simulation propogation
+p_days = 0.2; % Days of simulation propogation
+startTime = datetime(2020,5,11,12,35,38); % Start Epoch
+stopTime = startTime + days(p_days); % End Epoch
+sampleTime = 60; % Sample Time [s]
 
 % Options:
 % - on --> Show 3D simulation
 % - off --> Skip 3D viewer
-viewOpt_3D = "off"; % Select 3D Viewer option
+viewOpt_3D = "on"; % Select 3D Viewer option
 
-% Available Providers:
+% Available Ground Station Providers:
 % - none --> Skip Ground Station Analysis Entirely
 % - SSC --> Swedish Space Corporation
 % - NEN --> Near Earth Network (NASA) --> NOT IMPLEMENTED YET
 % - AWS --> Amazon Web Services --> NOT IMPLEMENTED YET
 % - KSAT --> Kongsberg Satellite Services --> NOT IMPLEMENTED YET
-ground_network = "none"; % Select Ground Station Provider
-
-startTime = datetime(2020,5,11,12,35,38); % Start Epoch
-stopTime = startTime + days(p_days); % End Epoch
-sampleTime = 60; % Sample Time [s]
+ground_network = "SSC"; % Select Ground Station Provider
 
 fprintf("Initializing orbital simulation...")
 
@@ -625,5 +624,26 @@ scaleruler on
 scaleruler("units", "km")
 
 fprintf("Done!\n")
+
+%% Print - Minimum Ground Station Connection Time
+
+if ground_network == "SSC"
+    fprintf("\n--------------------------------------------------------------------------------------------------------------------\n")
+    fprintf("Ground Station Contact Analysis - Swedish Space Corporation (SSC)")
+    fprintf("\n--------------------------------------------------------------------------------------------------------------------\n")
+    fprintf("\nMain Plane - 24 Satellites\n")
+    fprintf("\nMin. Time in Contact w/ Ground Stations over %0.2f day(s): %0.2f seconds\n", p_days, min(CT_1))
+    fprintf("Max. Time in Contact w/ Ground Stations over %0.2f day(s): %0.2f seconds\n", p_days, max(CT_1))
+    fprintf("Total Time in Contact w/ Ground Stations by all 24 satellites over %0.2f day(s): %0.2f seconds\n", p_days, sum(CT_1))
+    fprintf("\n--------------------------------------------------------------------------------------------------------------------\n")
+    fprintf("\nSecond Plane - 12 Satellites\n")
+    fprintf("\nMin. Time in Contact w/ Ground Stations over %0.2f day(s): %0.2f seconds\n", p_days, min(CT_2))
+    fprintf("Max. Time in Contact w/ Ground Stations over %0.2f day(s): %0.2f seconds\n", p_days, max(CT_2))
+    fprintf("Total Time in Contact w/ Ground Stations by all 12 satellites over %0.2f day(s): %0.2f seconds\n", p_days, sum(CT_2))
+    fprintf("\n--------------------------------------------------------------------------------------------------------------------\n")
+    fprintf("\nConstellation - 36 Satellites\n")
+    fprintf("\nTotal Time in Contact w/ Ground Stations by all 36 satellites over %0.2f day(s): %0.2f seconds\n", p_days, sum(CT_1)+sum(CT_2))
+    fprintf("\n--------------------------------------------------------------------------------------------------------------------\n")
+end
 
 toc % Display total runtime of NumericalSolver_2OA
