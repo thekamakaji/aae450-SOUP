@@ -48,6 +48,7 @@ viewOpt_3D = "on"; % Select 3D Viewer option
 % - AWS --> Amazon Web Services --> NOT IMPLEMENTED YET
 % - KSAT --> Kongsberg Satellite Services --> NOT IMPLEMENTED YET
 ground_network = "SSC"; % Select Ground Station Provider
+defaultEA = 10; % Default Min. Elevation Angle [deg.]
 
 fprintf("Initializing orbital simulation...")
 
@@ -91,16 +92,16 @@ if ground_network == "SSC"
 
     fprintf("Defining Ground Station Network...")
 
-    GS_SSC(1) = groundStation(sc_main, 19.0166, -155.6667, "Name", "SSC - South Point Satellite Station", "MinElevationAngle", 10);
-    GS_SSC(2) = groundStation(sc_main, 26.7333, -81.00333, "Name", "SSC - Clewiston Satellite Station", "MinElevationAngle", 10);
-    GS_SSC(3) = groundStation(sc_main, 64.8000, -147.6500, "Name", "SSC - North Pole Satellite Station", "MinElevationAngle", 10);
-    GS_SSC(4) = groundStation(sc_main, 68.4000, -133.5000, "Name", "SSC - Inuvik Satellite Station", "MinElevationAngle", 10);
-    GS_SSC(5) = groundStation(sc_main, -33.0133, -70.6666, "Name", "SSC - Santiago Satellite Station", "MinElevationAngle", 10);
-    GS_SSC(6) = groundStation(sc_main, -52.9333, -70.8500, "Name", "SSC - Punta Arenas Satellite Station", "MinElevationAngle", 10);
-    GS_SSC(7) = groundStation(sc_main, 67.8833, 21.00666, "Name", "SSC - Esrange Space Center", "MinElevationAngle", 10);
-    GS_SSC(8) = groundStation(sc_main, 59.2000, 18.00833, "Name", "SSC - Stockholm Teleport", "MinElevationAngle", 10);
-    GS_SSC(9) = groundStation(sc_main, 13.1000, 100.9167, "Name", "SSC - Siracha Satellite Station", "MinElevationAngle", 10);
-    GS_SSC(10) = groundStation(sc_main, -29.0083, 135.5833, "Name", "SSC - WASC", "MinElevationAngle", 10);
+    GS(1) = groundStation(sc_main, 19.0166, -155.6667, "Name", "SSC - South Point Satellite Station", "MinElevationAngle", defaultEA);
+    GS(2) = groundStation(sc_main, 26.7333, -81.00333, "Name", "SSC - Clewiston Satellite Station", "MinElevationAngle", defaultEA);
+    GS(3) = groundStation(sc_main, 64.8000, -147.6500, "Name", "SSC - North Pole Satellite Station", "MinElevationAngle", defaultEA);
+    GS(4) = groundStation(sc_main, 68.4000, -133.5000, "Name", "SSC - Inuvik Satellite Station", "MinElevationAngle", defaultEA);
+    GS(5) = groundStation(sc_main, -33.0133, -70.6666, "Name", "SSC - Santiago Satellite Station", "MinElevationAngle", defaultEA);
+    GS(6) = groundStation(sc_main, -52.9333, -70.8500, "Name", "SSC - Punta Arenas Satellite Station", "MinElevationAngle", defaultEA);
+    GS(7) = groundStation(sc_main, 67.8833, 21.00666, "Name", "SSC - Esrange Space Center", "MinElevationAngle", defaultEA);
+    GS(8) = groundStation(sc_main, 59.2000, 18.00833, "Name", "SSC - Stockholm Teleport", "MinElevationAngle", defaultEA);
+    GS(9) = groundStation(sc_main, 13.1000, 100.9167, "Name", "SSC - Siracha Satellite Station", "MinElevationAngle", defaultEA);
+    GS(10) = groundStation(sc_main, -29.0083, 135.5833, "Name", "SSC - WASC", "MinElevationAngle", defaultEA);
    
     fprintf("Done!\n")
 
@@ -164,9 +165,9 @@ if ground_network == "SSC"
     fprintf("Calculating Ground Station Contacts w/ SSC - Main Plane (24)...")
     
     % Main Plane Access - SSC
-    for m = 1:1:length(GS_SSC)
+    for m = 1:1:length(GS)
         for n = 1:1:24
-            AC_1(n, m) = access(Rx_1(n), GS_SSC(m));
+            AC_1(n, m) = access(Rx_1(n), GS(m));
         end
     end
     
@@ -174,9 +175,9 @@ if ground_network == "SSC"
     fprintf("Calculating Ground Station Contacts w/ SSC - Second Plane (12)...")
     
     % Secondary Plane Access - SSC
-    for m = 1:1:length(GS_SSC)
+    for m = 1:1:length(GS)
         for n = 1:1:12
-            AC_2(n, m) = access(Rx_2(n), GS_SSC(m));
+            AC_2(n, m) = access(Rx_2(n), GS(m));
         end
     end
     
@@ -185,7 +186,7 @@ if ground_network == "SSC"
     
     CT_1_temp = zeros(24);
     CT_2_temp = zeros(12);
-    for m = 1:1:length(GS_SSC)
+    for m = 1:1:length(GS)
         for n = 1:1:24
             CT_1_temp(n) = CT_1_temp(n) + sum(accessIntervals(AC_1(n,m)).Duration(:));
         end
